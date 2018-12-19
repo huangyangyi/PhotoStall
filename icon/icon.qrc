@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>保存.png</file>
+        <file>撤销.png</file>
+        <file>返回.png</file>
+        <file>另存.png</file>
+        <file>添加.png</file>
+        <file>文件夹-展开.png</file>
+        <file>关闭.png</file>
+        <file>控件未选.png</file>
+        <file>形状-椭圆形.png</file>
+        <file>形状-文字.png</file>
+        <file>移动.png</file>
+        <file>直线.png</file>
+    </qresource>
+</RCC>
