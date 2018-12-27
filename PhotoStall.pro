@@ -26,10 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    layer.cpp \
+    imageproject.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    layer.h \
+    imageproject.h
 
 FORMS += \
         mainwindow.ui
@@ -38,3 +42,20 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32 {
+}
+
+unix {
+    INCLUDEPATH += /usr/local/include
+    INCLUDEPATH += /usr/local/include/opencv
+    INCLUDEPATH += /usr/local/include/opencv2
+    LIBS += -L/usr/local/lib \
+     -lopencv_core \
+     -lopencv_highgui \
+     -lopencv_imgproc \
+
+    QT_CONFIG -= no-pkg-config
+    CONFIG += link_pkgconfig
+    PKGCONFIG += opencv
+}
