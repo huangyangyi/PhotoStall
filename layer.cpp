@@ -12,7 +12,7 @@ Layer::Layer()
     M.create(0, 0, CV_8UC1);
 }
 
-Layer::Layer(string FILE_PATH, string name, int visionType, int cornerX, int cornerY)
+Layer::Layer(string FILE_PATH, string name, Transparency visionType, int cornerX, int cornerY)
     :name(name), visionType(visionType), cornerX(cornerX), cornerY(cornerY)
 {
     M = imread(FILE_PATH);
@@ -21,7 +21,7 @@ Layer::Layer(string FILE_PATH, string name, int visionType, int cornerX, int cor
     height = M.rows;
 }
 
-Layer::Layer(string name, int visionType, int width, int height, int cornerX, int cornerY, Mat M)
+Layer::Layer(string name, Transparency visionType, int width, int height, int cornerX, int cornerY, Mat M)
     :name(name), visionType(visionType), width(width), height(height), cornerX(cornerX), cornerY(cornerY), M(M)
 { }
 

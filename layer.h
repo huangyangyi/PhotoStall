@@ -20,7 +20,7 @@ private:
     // name of this layer
     int id;
     // the ID of this layer
-    int visionType;
+    Transparency visionType;
     // The type of how this Layer is seen.
     // TRANSPARENT : only the valued pixels will be mapped on the screen
     // OPAQUE: all pixels of this layer will be mapped
@@ -32,8 +32,8 @@ private:
 
 public:
     Layer();
-    Layer(string FILE_PATH, string name, int visionType, int cornerX = 0, int cornerY = 0);
-    Layer(string name, int visionType, int width, int height, int cornerX, int cornerY, Mat M);
+    Layer(string FILE_PATH, string name, Transparency visionType, int cornerX = 0, int cornerY = 0);
+    Layer(string name, Transparency visionType, int width, int height, int cornerX, int cornerY, Mat M);
     void set_name(string name);
     static int layerCount;
     friend class ImageProject;
