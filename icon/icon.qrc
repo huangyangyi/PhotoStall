@@ -12,5 +12,9 @@
         <file>形状-文字.png</file>
         <file>移动.png</file>
         <file>直线.png</file>
+        <file>PNG.png</file>
+        <file>马赛克.png</file>
+        <file>设置.png</file>
+        <file>图片裁剪.png</file>
     </qresource>
 </RCC>
