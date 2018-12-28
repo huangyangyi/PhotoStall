@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     layer.cpp \
-    imageproject.cpp
+    layergroup.cpp \
+    layerbasic.cpp
 
 HEADERS += \
         mainwindow.h \
     layer.h \
-    imageproject.h
+    layergroup.h \
+    layerbasic.h
 
 FORMS += \
         mainwindow.ui
