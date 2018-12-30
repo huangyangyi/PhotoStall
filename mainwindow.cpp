@@ -25,14 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ConnectFile();
 
     InitImage();        // 初始化图像QLabel
-    //皮肤！
-    QFile styleSheet("./qss/main.qss");
-    if (!styleSheet.open(QIODevice::ReadOnly))
-       {
-           qWarning("Can't open the style sheet file.");
-           return;
-       }
-    ui->dock_geometry->setStyleSheet(styleSheet.readAll());
+
 }
 
 MainWindow::~MainWindow()
