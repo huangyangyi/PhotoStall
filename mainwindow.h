@@ -3,10 +3,11 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include<QFileDialog>
-#include<QApplication>
-#include<QMessageBox>
-#include<QScrollArea>
+#include <QFileDialog>
+#include <QApplication>
+#include <QMessageBox>
+#include <QScrollArea>
+#include <QTextStream>
 
 namespace Ui {
 class MainWindow;
