@@ -48,8 +48,18 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     icon/icon.qrc
 win32 {
+    INCLUDEPATH += D:\opencv\opencv\build\include
+    INCLUDEPATH += D:\opencv\opcnv\build\include\opencv
+    INCLUDEPATH += D:\opencv\opcnv\build\include\opencv2
+    CONFIG(debug,debug|release){
+        LIBS+= -LD:\opencv\opencv\build\x64\vc15\lib \
+        -lopencv_world342d
+    }
+    else {
+        LIBS+= -LD:\opencv\opencv\build\x64\vc15\lib \
+        -lopencv_world342
+    }
 }
-
 unix {
     INCLUDEPATH += /usr/local/include
     INCLUDEPATH += /usr/local/include/opencv
