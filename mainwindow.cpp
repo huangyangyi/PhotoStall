@@ -78,7 +78,7 @@ void MainWindow::OpenFile()
         if (layergroup == nullptr) {
             layergroup = new LayerGroup(layer.get_width(),layer.get_height());
         }
-        layergroup->insert(layer,layer.get_id());
+        layergroup->insert(layer);
         qDebug()<<"Insert layer OK\n";
     }
     MainWindow::RefreshView();

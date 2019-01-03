@@ -58,49 +58,49 @@ bool LayerGroup::insert(Layer layer, int id)
 QImage LayerGroup::get_preview()
 {
     //TODO:完成合成预览图的逻辑
-    if (!vec_layer.empty())
-        return (*vec_layer.begin()).toQImage_ref(QImage::Format_RGB888);
+    if (vec_layer.size()>2)
+        return vec_layer[1].toQImage_ref(QImage::Format_RGB888);
     else
         return QImage(500, 500, QImage::Format_RGB888);
-
-    bool LayerGroup::reorder(vector<int> new_id)
+}
+bool LayerGroup::reorder(vector<int> new_id)
+{
+    if (vec_id.size() != new_id.size())
+        return 0;
+    for (int i = 0; i < new_id.size(); i++)
     {
-        if (vec_id.size() != new_id.size())
-            return 0;
-        for (int i = 0; i < new_id.size(); i++)
+        int p = -1;
+        for (int j = 0; j < i; j++)
         {
-            int p = -1;
-            for (int j = 0; j < i; j++)
-            {
-                if (new_id[j] == new_id[i])
-                    return 0;
-            }
-            for (int j = 0; j < vec_id.size(); j++)
-            {
-                if (vec_id[j] == new_id[i])
-                {
-                    p = j;
-                    break;
-                }
-            }
-            if (p == -1)
+            if (new_id[j] == new_id[i])
                 return 0;
         }
-        for (int i = 0; i < vec_id.size(); i++)
+        for (int j = 0; j < vec_id.size(); j++)
         {
-            if (vec_id[i] == new_id[i])
-                continue;
-            int pos = -1;
-            for (int j = i + 1; j < vec_id.size(); j++)
+            if (vec_id[j] == new_id[i])
             {
-                if (vec_id[j] == new_id[i])
-                {
-                    pos = j;
-                    break;
-                }
+                p = j;
+                break;
             }
-            swap(vec_id[i], vec_id[pos]);
-            swap(vec_layer[i], vec_layer[pos]);
         }
-        return 1;
+        if (p == -1)
+            return 0;
     }
+    for (int i = 0; i < vec_id.size(); i++)
+    {
+        if (vec_id[i] == new_id[i])
+            continue;
+        int pos = -1;
+        for (int j = i + 1; j < vec_id.size(); j++)
+        {
+            if (vec_id[j] == new_id[i])
+            {
+                pos = j;
+                break;
+            }
+        }
+        swap(vec_id[i], vec_id[pos]);
+        swap(vec_layer[i], vec_layer[pos]);
+    }
+    return 1;
+}
