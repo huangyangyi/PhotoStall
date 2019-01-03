@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
+#include <QImage>
 #include <cstring>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
@@ -52,6 +53,11 @@ public:
     string get_name();
     void set_id(int id);
     int get_id();
+    int get_width();
+    int get_height();
+    QImage toQImage_ref(QImage::Format format) {
+        return QImage(M.data, M.cols, M.rows, static_cast<int>(M.step), format);
+    }
 };
 
 #endif // LAYER_H

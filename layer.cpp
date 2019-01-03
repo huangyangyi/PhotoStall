@@ -80,3 +80,11 @@ int Layer::get_id()
 {
     return this->id;
 }
+
+int Layer::get_height(){
+    return this->height;
+}
+
+int Layer::get_width(){
+    return this->width;
+}

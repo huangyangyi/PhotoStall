@@ -16,6 +16,7 @@ public:
     LayerGroup(int maxHeight = defaultSize, int maxWidth = defaultSize);
 
     bool insert(Layer layer, int id = -1);
+    QImage get_preview();
 };
 
 #endif // LAYERGROUP_H

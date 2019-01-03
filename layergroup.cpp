@@ -42,11 +42,16 @@ bool LayerGroup::insert(Layer layer, int id)
                 place = i;
                 break;
             }
-        }
+            }
         if (place == -1) return 0;
         layerNum++;
         vec_id.insert(it_id, id);
         vec_layer.insert(it_layer, layer);
         return 1;
     }
+}
+QImage LayerGroup::get_preview(){
+    //TODO:完成合成预览图的逻辑
+    if (!vec_layer.empty()) return (*vec_layer.begin()).toQImage_ref(QImage::Format_RGB888);
+    else return QImage(500, 500, QImage::Format_RGB888);
 }
