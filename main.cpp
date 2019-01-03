@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "layergroup.h"
 
 int main(int argc, char *argv[])
 {
