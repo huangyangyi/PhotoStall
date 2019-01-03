@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QScrollArea>
 #include <QTextStream>
-
+#include "layergroup.h"
 namespace Ui {
 class MainWindow;
 }
@@ -23,6 +23,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    LayerGroup *layergroup=nullptr;
     //打开文件
     QDockWidget *dock_center;
     QString currentPath;
@@ -34,6 +35,7 @@ private slots:
     void OpenFile();
     void SaveFile();
     void SaveasFile();
+    void RefreshView();
 };
 
 #endif // MAINWINDOW_H

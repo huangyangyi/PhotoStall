@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include<QDebug>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -62,29 +63,25 @@ void MainWindow::InitImage()
 //新建
 void MainWindow::NewFile()
 {
-    QImage image = QImage(500, 500, QImage::Format_RGB32);
-        image.fill(qRgb(255, 255, 255));
-        imgLabel->setPixmap(QPixmap::fromImage(image));
-        imgLabel->resize(image.width(), image.height());
-        currentPath = "";
+    if (layergroup!=nullptr) delete layergroup;
+    layergroup = new LayerGroup;
+    MainWindow::RefreshView();
 }
 //打开
 void MainWindow::OpenFile()
 {
     QString path = QFileDialog::getOpenFileName(this, "选择图像", ".", "Images(*.jpg *.png *.bmp)");                            // 文件选择框
-        if (!path.isEmpty())
-        {
-            QImage* img = new QImage();
-            if (!(img->load(path)))
-            {
-                QMessageBox::information(this, "错误", "打开图像失败!");
-                delete img;
-                return;
-            }
-            imgLabel->setPixmap(QPixmap::fromImage(*img));
-            imgLabel->resize(img->width(), img->height());
-            currentPath = path;
+    if (!path.isEmpty())
+    {
+        qDebug()<<path<<endl;
+        Layer layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
+        if (layergroup == nullptr) {
+            layergroup = new LayerGroup(layer.get_width(),layer.get_height());
         }
+        layergroup->insert(layer);
+        qDebug()<<"Insert layer OK\n";
+    }
+    MainWindow::RefreshView();
 }
 //保存
 void MainWindow::SaveFile()
@@ -112,4 +109,12 @@ void MainWindow::SaveasFile()
         currentPath = path;
     }
 }
-
+void MainWindow::RefreshView()
+{
+    if (layergroup==nullptr) imgLabel->clear();
+    else {
+        QImage preview = layergroup->get_preview();
+        imgLabel->setPixmap(QPixmap::fromImage(preview));
+        imgLabel->resize(preview.width(),preview.height());
+    }
+}

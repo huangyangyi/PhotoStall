@@ -20,6 +20,7 @@ public:
     // otherwise inserted after layer with id
     // cannot insert after the last layer or before the first layer
     bool insert(Layer layer, int id = -1);
+    QImage get_preview();
 
     // Delete function
     // delete the layer with this->id == id,
