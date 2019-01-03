@@ -77,6 +77,29 @@ bool LayerGroup::insert(Layer layer, int id)
         return 1;
     }
 }
+
+bool LayerGroup::remove(int id)
+{
+    int p = -1;
+    for(int i = 0; i < vec_id.size(); i++)
+    {
+        if (vec_id[i] == id) { p = i; break; }
+    }
+    if (p == -1) return 0;
+    vector<int>::iterator it_id = vec_id.begin();
+    vector<Layer>::iterator it_layer = vec_layer.begin();
+    for(int i = 0; i < vec_id.size(); i++, it_id++, it_layer++)
+    {
+        if (vec_id[i] == id)
+        {
+            vec_id.erase(it_id);
+            vec_layer.erase(it_layer);
+            break;
+        }
+    }
+    return 1;
+}
+
 QImage LayerGroup::get_preview()
 {
     //TODO:完成合成预览图的逻辑
@@ -85,6 +108,7 @@ QImage LayerGroup::get_preview()
     else
         return QImage(500, 500, QImage::Format_RGB888);
 }
+
 bool LayerGroup::reorder(vector<int> new_id)
 {
     if (vec_id.size() != new_id.size())
