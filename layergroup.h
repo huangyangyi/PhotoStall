@@ -2,7 +2,7 @@
 #define LAYERGROUP_H
 
 #include "layer.h"
-
+#include <vector>
 const int defaultSize = 1000;
 
 class LayerGroup
@@ -14,7 +14,7 @@ private:
     vector<Layer> vec_layer;
 public:
     LayerGroup(int maxHeight = defaultSize, int maxWidth = defaultSize);
-
+    LayerGroup(string file_name, string name = "unknown");
     // Insert function
     // default is to be inserted at the tail
     // otherwise inserted after layer with id

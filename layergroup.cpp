@@ -19,6 +19,28 @@ LayerGroup::LayerGroup(int maxHeight, int maxWidth)
     vec_layer.push_back(up);
 }
 
+LayerGroup::LayerGroup(string file_name, string name)
+{
+    layerNum = 3;
+    Layer bottom, mid, up;
+    mid.create(file_name, name, OPAQUE);
+    maxHeight = mid.height;
+    maxWidth = mid.width;
+
+    bottom.create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
+    up.create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+
+    vec_id.clear();
+    vec_id.push_back(bottom.id);
+    vec_id.push_back(mid.id);
+    vec_id.push_back(up.id);
+
+    vec_layer.clear();
+    vec_layer.push_back(bottom);
+    vec_layer.push_back(mid);
+    vec_layer.push_back(up);
+}
+
 bool LayerGroup::insert(Layer layer, int id)
 {
     if (id == vec_id[layerNum-1]) return 0;
