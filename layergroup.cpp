@@ -21,11 +21,14 @@ LayerGroup::LayerGroup(int maxHeight, int maxWidth)
 
 bool LayerGroup::insert(Layer layer, int id)
 {
+    if (id == vec_id[layerNum-1]) return 0;
     if (id == -1)
     {
         layerNum++;
         vec_id.push_back(layer.id);
         vec_layer.push_back(layer);
+        swap(vec_id[layerNum-1], vec_id[layerNum-2]);
+        swap(vec_layer[layerNum-1], vec_layer[layerNum-2]);
         return 1;
     }
     else
@@ -49,4 +52,39 @@ bool LayerGroup::insert(Layer layer, int id)
         vec_layer.insert(it_layer, layer);
         return 1;
     }
+}
+
+bool LayerGroup::reorder(vector<int> new_id)
+{
+    if (vec_id.size() != new_id.size())
+        return 0;
+    for(int i = 0; i < new_id.size(); i++)
+    {
+        int p = -1;
+        for(int j = 0; j < i; j++)
+        {
+            if (new_id[j] == new_id[i]) return 0;
+        }
+        for(int j = 0; j < vec_id.size(); j++)
+        {
+            if (vec_id[j] == new_id[i]) { p = j; break; }
+        }
+        if (p == -1) return 0;
+    }
+    for(int i = 0; i < vec_id.size(); i++)
+    {
+        if (vec_id[i] == new_id[i]) continue;
+        int pos = -1;
+        for(int j = i + 1; j < vec_id.size(); j++)
+        {
+            if (vec_id[j] == new_id[i])
+            {
+                pos = j;
+                break;
+            }
+        }
+        swap(vec_id[i], vec_id[pos]);
+        swap(vec_layer[i], vec_layer[pos]);
+    }
+    return 1;
 }
