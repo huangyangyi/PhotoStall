@@ -37,7 +37,7 @@ void LayerBasic::layerTranslation(Layer &layer, int x, int y)
     Mat src = layer.M;
     Mat dst;
 
-    Size dst_sz = src.Size();
+    Size dst_sz = src.size();
 
     //定义平移矩阵
     Mat t_mat = Mat::zeros(2,3,CV_32FC1);
@@ -66,7 +66,7 @@ Mat LayerBasic::layerCalHist(Layer &layer)
 
 Mat LayerBasic::layerShowHist(Layer &layer)
 {
-    Mat hist = LayerBasic::layerCalHist(&layer);
+    Mat hist = LayerBasic::layerCalHist(layer);
     Mat showImage(256,256, CV_8U,Scalar(0));
     int i;
     double maxValue = 0;

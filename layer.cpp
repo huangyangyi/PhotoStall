@@ -9,13 +9,15 @@ Layer::Layer()
     minCol = minRow = 0;
     width = height = 0;
     id = ++layerCount;
-    M.create(0, 0, CV_8UC3);
+    M = Mat(0, 0, CV_8UC3, Scalar(255, 255, 255));
+    valued = Mat(0, 0, CV_8UC1, Scalar(0));
 }
 
 Layer::Layer(string FILE_PATH, string name, Transparency visionType, bool visibility, int minRow, int minCol)
     :name(name), visionType(visionType), minCol(minCol), minRow(minRow), visibility(visibility)
 {
     M = imread(FILE_PATH);
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
     id = ++layerCount;
     width = M.cols;
     height = M.rows;
@@ -23,7 +25,9 @@ Layer::Layer(string FILE_PATH, string name, Transparency visionType, bool visibi
 
 Layer::Layer(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol, Mat M)
     :name(name), visionType(visionType), visibility(visibility), width(width), height(height), minCol(minCol), minRow(minRow), M(M)
-{ }
+{
+    valued = Mat(height, width, CV_8UC1, Scalar(0));
+}
 
 void Layer::create(string FILE_PATH, string name, Transparency visionType, bool visibility, int minRow, int minCol)
 {
@@ -35,11 +39,13 @@ void Layer::create(string FILE_PATH, string name, Transparency visionType, bool 
     this->minCol = minCol;
     width = M.cols;
     height = M.rows;
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
 }
 
 void Layer::create(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol)
 {
-    (this->M).create(height, width, CV_8UC3);
+    M = Mat(height, width, CV_8UC3, Scalar(255, 255, 255));
+    valued = Mat(height, width, CV_8UC1, Scalar(0));
     this->name = name;
     this->visionType = visionType;
     this->visibility = visibility;
@@ -52,6 +58,7 @@ void Layer::create(string name, Transparency visionType, int width, int height, 
 void Layer::create(Mat M, string name, Transparency visionType, bool visibility, int minRow, int minCol)
 {
     this->M = M;
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
     this->name = name;
     this->visionType = visionType;
     this->visibility = visibility;
@@ -59,32 +66,4 @@ void Layer::create(Mat M, string name, Transparency visionType, bool visibility,
     this->minCol = minCol;
     this->width = M.cols;
     this->height = M.rows;
-}
-
-void Layer::set_name(string name)
-{
-    this->name = name;
-}
-
-string Layer::get_name()
-{
-    return this->name;
-}
-
-void Layer::set_id(int id)
-{
-    this->id = id;
-}
-
-int Layer::get_id()
-{
-    return this->id;
-}
-
-int Layer::get_height(){
-    return this->height;
-}
-
-int Layer::get_width(){
-    return this->width;
 }
