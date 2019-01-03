@@ -6,6 +6,7 @@ Layer::Layer()
 {
     name = "unknown";
     visionType = OPAQUE;
+    visibility = 1;
     minCol = minRow = 0;
     width = height = 0;
     id = ++layerCount;

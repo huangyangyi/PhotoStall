@@ -102,11 +102,29 @@ bool LayerGroup::remove(int id)
 
 QImage LayerGroup::get_preview()
 {
-    //TODO:完成合成预览图的逻辑
-    if (vec_layer.size()>2)
-        return vec_layer[1].toQImage_ref(QImage::Format_RGB888);
-    else
-        return QImage(500, 500, QImage::Format_RGB888);
+    Mat rst(this->maxHeight, this->maxWidth, CV_8UC3, Scalar(255, 255, 255));
+
+    for(int i = 0; i < vec_layer.size(); i++)
+    {
+        if (!vec_layer[i].visibility) continue;
+        Layer l = vec_layer[i];
+        for(int x = 0; x < l.M.rows; x++)
+        {
+            for(int y = 0; y < l.M.cols; y++)
+            {
+                int xx = x + l.minRow, yy = y + l.minCol;
+                if (xx > maxHeight || yy > maxWidth)
+                    continue;
+                bool flag = 0;
+                if (l.visionType == OPAQUE || l.valued.at<uchar>(x, y) > 0)
+                    flag = 1;
+                if (flag)
+                    rst.at<Vec3b>(xx, yy) = l.M.at<Vec3b>(x, y);
+            }
+        }
+    }
+
+    return QImage(rst.data, rst.cols, rst.rows, static_cast<int>(rst.step), QImage::Format_RGB888);
 }
 
 bool LayerGroup::reorder(vector<int> new_id)

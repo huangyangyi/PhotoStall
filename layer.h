@@ -35,7 +35,6 @@ private:
 
 public:
     static int layerCount;
-    friend class ImageProject;
     friend class LayerGroup;
     friend class LayerBasic;
     // To write other operations of different types
@@ -51,14 +50,22 @@ public:
 
     void set_name(string name) { this->name = name; }
     string get_name() { return this->name; }
+
     void set_id(int id) { this->id = id; }
     int get_id() { return this->id; }
+
     void set_minRow(int x) { this->minRow = x; }
     int get_minRow() { return this->minRow; }
+
     void set_minCol(int x) { this->minCol = x; }
     int get_minCol() { return this->minCol; }
+
     int get_width() { return this->width; }
+
     int get_height() { return this->height; }
+
+    void set_visibility(bool vis) { this->visibility = vis; }
+    bool get_visibility() { return this->visibility; }
 
     QImage toQImage_ref(QImage::Format format) {
         return QImage(M.data, M.cols, M.rows, static_cast<int>(M.step), format);
