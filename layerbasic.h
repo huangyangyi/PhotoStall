@@ -41,7 +41,11 @@ public:
     // 双边滤波
 
     // Tailoring
-    void layerTailoring(Layer &layer,int x,int y,int width,int height);
+    void layerTailoring(Layer &layer,Rect rect);
+	// 裁剪
+	void layerLine(Layer &layer,Point pt1,Point pt2,const Scalar& color,int thickness,int lineType,int shift);
+	void layerCircle(Layer &layer,Point center,int radius, const Scalar& color, int thickness, int lineType, int shift);
+	void layerRect(Layer &layer, Rect rect, const Scalar& color, int thickness, int lineType, int shift);
 };
 
 #endif // LAYERBASIC_H

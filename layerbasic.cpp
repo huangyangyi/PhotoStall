@@ -34,21 +34,10 @@ void LayerBasic::layerRotate(Layer& layer,double angle)
 
 void LayerBasic::layerTranslation(Layer &layer, int x, int y)
 {
-    Mat src = layer.M;
-    Mat dst;
-
-    Size dst_sz = src.size();
-
-    //定义平移矩阵
-    Mat t_mat = Mat::zeros(2,3,CV_32FC1);
-    t_mat.at<float>(0,0) = 1;
-    t_mat.at<float>(0,2) = x;
-    t_mat.at<float>(1,1) = 1;
-    t_mat.at<float>(1,2) = y;
-
-    //根据平移矩阵进行仿射变换
-    warpAffine(src,dst,t_mat,dst_sz);
-    layer.M = dst;
+	if (layer.minCol + x > 0)layer.minCol += x;
+	else layer.minCol = 0;
+	if (layer.minRow + y > 0)layer.minRow += y;
+	else layer.minRow = 0;
 }
 
 Mat LayerBasic::layerCalHist(Layer &layer)
@@ -128,10 +117,28 @@ void LayerBasic::layerBilateralFilter(Layer &layer)
     layer.M = dst;
 }
 
-void LayerBasic::layerTailoring(Layer &layer,int x,int y,int width,int height)
+void LayerBasic::layerTailoring(Layer &layer,Rect rect)
 {
     Mat src= layer.M;
-    Rect rect(x,y,width,height);
     Mat dst = src(rect);
     layer.M = dst;
 }
+
+void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & color, int thickness=1, int lineType=8, int shift=0)
+{
+	line(layer.M, pt1, pt2, color, thickness, lineType, shift);
+	line(layer.valued, pt1, pt2, Scalar(255), thickness, lineType, shift);
+}
+
+void LayerBasic::layerCircle(Layer & layer, Point center, int radius, const Scalar & color, int thickness=1, int lineType=8, int shift=0)
+{
+	circle(layer.M, center, radius, color, thickness, lineType, shift);
+	circle(layer.valued, center, radius, Scalar(255), thickness, lineType, shift);
+}
+
+void LayerBasic::layerRect(Layer & layer, Rect rect, const Scalar & color, int thickness=1, int lineType=8, int shift=0)
+{
+	rectangle(layer.M, rect, color, thickness, lineType, shift);
+	rectangle(layer.valued, rect, Scalar(255), thickness, lineType, shift);
+}
+
