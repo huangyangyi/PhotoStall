@@ -117,16 +117,12 @@ bool LayerGroup::reorder(vector<int> new_id)
     {
         int p = -1;
         for (int j = 0; j < i; j++)
-        {
-            if (new_id[j] == new_id[i])
-                return 0;
-        }
+            if (new_id[j] == new_id[i]) return 0;
         for (int j = 0; j < vec_id.size(); j++)
         {
             if (vec_id[j] == new_id[i])
             {
-                p = j;
-                break;
+                p = j; break;
             }
         }
         if (p == -1)
@@ -149,4 +145,14 @@ bool LayerGroup::reorder(vector<int> new_id)
         swap(vec_layer[i], vec_layer[pos]);
     }
     return 1;
+}
+
+vector<int> LayerGroup::get_vec_id()
+{
+    return vec_id;
+}
+
+vector<Layer>& LayerGroup::get_vec_layer()
+{
+    return vec_layer;
 }
