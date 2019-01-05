@@ -46,7 +46,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icon/icon.qrc
+    icon/icon.qrc \
+    qss/qss.qrc
 win32 {
     INCLUDEPATH += D:\opencv\opencv\build\include
     INCLUDEPATH += D:\opencv\opcnv\build\include\opencv

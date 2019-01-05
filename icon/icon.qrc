@@ -1,20 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>保存.png</file>
-        <file>撤销.png</file>
-        <file>返回.png</file>
-        <file>另存.png</file>
-        <file>添加.png</file>
-        <file>文件夹-展开.png</file>
-        <file>关闭.png</file>
-        <file>控件未选.png</file>
-        <file>形状-椭圆形.png</file>
-        <file>形状-文字.png</file>
-        <file>移动.png</file>
-        <file>直线.png</file>
-        <file>PNG.png</file>
-        <file>马赛克.png</file>
-        <file>设置.png</file>
-        <file>图片裁剪.png</file>
+        <file>add.png</file>
+        <file>choose.png</file>
+        <file>close.png</file>
+        <file>cut.png</file>
+        <file>ellipse.png</file>
+        <file>image.png</file>
+        <file>line.png</file>
+        <file>mosaic.png</file>
+        <file>open.png</file>
+        <file>recover.png</file>
+        <file>rectangle.png</file>
+        <file>revert.png</file>
+        <file>save.png</file>
+        <file>saveas.png</file>
+        <file>setting.png</file>
+        <file>text.png</file>
     </qresource>
 </RCC>
