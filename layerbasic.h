@@ -43,9 +43,15 @@ public:
     // Tailoring
     void layerTailoring(Layer &layer,Rect rect);
 	// 裁剪
-	void layerLine(Layer &layer,Point pt1,Point pt2,const Scalar& color,int thickness,int lineType,int shift);
-	void layerCircle(Layer &layer,Point center,int radius, const Scalar& color, int thickness, int lineType, int shift);
-	void layerRect(Layer &layer, Rect rect, const Scalar& color, int thickness, int lineType, int shift);
+    void layerLine(Layer &layer,Point pt1,Point pt2,const Scalar& color,
+                   int state, int thickness,int lineType,int shift);
+    //画线
+    void layerCircle(Layer &layer,Point center,int radius, const Scalar& color,
+                     int state, int thickness, int lineType, int shift);
+    //画圆
+    void layerRect(Layer &layer, Rect rect, const Scalar& color,
+                   int state, int thickness, int lineType, int shift);
+    //画矩形
 };
 
 #endif // LAYERBASIC_H
