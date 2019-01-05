@@ -2,6 +2,11 @@
 
 int Layer::layerCount = 0;
 
+Scalar gt(Transparency vt)
+{
+    return vt == OPAQUE ? Scalar(1) : Scalar(0);
+}
+
 Layer::Layer()
 {
     name = "unknown";
@@ -11,23 +16,60 @@ Layer::Layer()
     width = height = 0;
     id = ++layerCount;
     M = Mat(0, 0, CV_8UC3, Scalar(255, 255, 255));
-    valued = Mat(0, 0, CV_8UC1, Scalar(0));
+    valued = Mat(0, 0, CV_8UC1, Scalar(255));
+}
+
+Layer::~Layer()
+{
+    ~M;
+    ~valued;
+}
+
+Layer::Layer(Layer& l)
+{
+    this->name = l.name;
+    this->visionType = l.visionType;
+    this->visibility = l.visibility;
+    this->minCol = l.minCol;
+    this->minRow = l.minRow;
+    this->width = l.width;
+    this->height = l.height;
+    this->id = l.id;
+    this->M = l.M.clone();
+    this->valued = l.valued.clone();
 }
 
 Layer::Layer(string FILE_PATH, string name, Transparency visionType, bool visibility, int minRow, int minCol)
     :name(name), visionType(visionType), minCol(minCol), minRow(minRow), visibility(visibility)
 {
     M = imread(FILE_PATH);
-    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(255));
     id = ++layerCount;
     width = M.cols;
     height = M.rows;
 }
 
 Layer::Layer(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol, Mat M)
-    :name(name), visionType(visionType), visibility(visibility), width(width), height(height), minCol(minCol), minRow(minRow), M(M)
+    :name(name), visionType(visionType), visibility(visibility), width(width), height(height), minCol(minCol), minRow(minRow)
 {
-    valued = Mat(height, width, CV_8UC1, Scalar(0));
+    this->M = M.clone();
+    valued = Mat(height, width, CV_8UC1, Scalar(255));
+}
+
+Layer& Layer::operator= (Layer& l)
+{
+    this->name = l.name;
+    this->visionType = l.visionType;
+    this->visibility = l.visibility;
+    this->minCol = l.minCol;
+    this->minRow = l.minRow;
+    this->width = l.width;
+    this->height = l.height;
+    this->id = l.id;
+    this->M = l.M.clone();
+    this->valued = l.valued.clone();
+
+    return *this;
 }
 
 void Layer::create(string FILE_PATH, string name, Transparency visionType, bool visibility, int minRow, int minCol)
@@ -40,13 +82,13 @@ void Layer::create(string FILE_PATH, string name, Transparency visionType, bool 
     this->minCol = minCol;
     width = M.cols;
     height = M.rows;
-    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(255));
 }
 
 void Layer::create(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol)
 {
     M = Mat(height, width, CV_8UC3, Scalar(255, 255, 255));
-    valued = Mat(height, width, CV_8UC1, Scalar(0));
+    valued = Mat(height, width, CV_8UC1, Scalar(255));
     this->name = name;
     this->visionType = visionType;
     this->visibility = visibility;
@@ -58,8 +100,8 @@ void Layer::create(string name, Transparency visionType, int width, int height, 
 
 void Layer::create(Mat M, string name, Transparency visionType, bool visibility, int minRow, int minCol)
 {
-    this->M = M;
-    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(0));
+    this->M = M.clone();
+    valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(255));
     this->name = name;
     this->visionType = visionType;
     this->visibility = visibility;
@@ -68,3 +110,4 @@ void Layer::create(Mat M, string name, Transparency visionType, bool visibility,
     this->width = M.cols;
     this->height = M.rows;
 }
+

@@ -5,13 +5,15 @@
 #include <vector>
 const int defaultSize = 1000;
 
+typedef Layer* LayerPtr;
+
 class LayerGroup
 {
 private:
     int layerNum;
     int maxHeight, maxWidth;
     vector<int> vec_id;
-    vector<Layer> vec_layer;
+    vector<Layer*> vec_layer;
 public:
     LayerGroup(int maxHeight = defaultSize, int maxWidth = defaultSize);
     LayerGroup(string file_name, string name = "unknown");
@@ -34,7 +36,8 @@ public:
 
     vector<int> get_vec_id();
 
-    vector<Layer>& get_vec_layer();
+    vector<Layer*>& get_vec_layer();
 };
 
+extern Mat rst;
 #endif // LAYERGROUP_H

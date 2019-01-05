@@ -1,5 +1,7 @@
 #include "layergroup.h"
 
+Mat rst;
+
 LayerGroup::LayerGroup(int maxHeight, int maxWidth)
 {
     layerNum = 2;
@@ -8,32 +10,34 @@ LayerGroup::LayerGroup(int maxHeight, int maxWidth)
     vec_id.clear();
     vec_layer.clear();
 
-    Layer bottom, up;
-    bottom.create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
-    up.create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    LayerPtr bottom = new Layer, up = new Layer;
+    bottom->create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
+    up->create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    up->clear_valued();
 
-    vec_id.push_back(bottom.id);
+    vec_id.push_back(bottom->id);
     vec_layer.push_back(bottom);
 
-    vec_id.push_back(up.id);
+    vec_id.push_back(up->id);
     vec_layer.push_back(up);
 }
 
 LayerGroup::LayerGroup(string file_name, string name)
 {
     layerNum = 3;
-    Layer bottom, mid, up;
-    mid.create(file_name, name, OPAQUE);
-    maxHeight = mid.height;
-    maxWidth = mid.width;
+    LayerPtr bottom = new Layer, mid = new Layer, up = new Layer;
+    mid->create(file_name, name, OPAQUE);
+    maxHeight = mid->height;
+    maxWidth = mid->width;
 
-    bottom.create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
-    up.create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    bottom->create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
+    up->create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    up->clear_valued();
 
     vec_id.clear();
-    vec_id.push_back(bottom.id);
-    vec_id.push_back(mid.id);
-    vec_id.push_back(up.id);
+    vec_id.push_back(bottom->id);
+    vec_id.push_back(mid->id);
+    vec_id.push_back(up->id);
 
     vec_layer.clear();
     vec_layer.push_back(bottom);
@@ -43,13 +47,15 @@ LayerGroup::LayerGroup(string file_name, string name)
 
 bool LayerGroup::insert(Layer layer, int id)
 {
+    LayerPtr pl = new Layer(layer);
+
     if (id == vec_id[layerNum - 1])
         return 0;
     if (id == -1)
     {
         layerNum++;
         vec_id.push_back(layer.id);
-        vec_layer.push_back(layer);
+        vec_layer.push_back(pl);
         swap(vec_id[layerNum - 1], vec_id[layerNum - 2]);
         swap(vec_layer[layerNum - 1], vec_layer[layerNum - 2]);
         return 1;
@@ -58,7 +64,7 @@ bool LayerGroup::insert(Layer layer, int id)
     {
         int place = -1;
         vector<int>::iterator it_id = vec_id.begin();
-        vector<Layer>::iterator it_layer = vec_layer.begin();
+        vector<Layer*>::iterator it_layer = vec_layer.begin();
         for (int i = 0; i < layerNum; i++)
         {
             it_id++;
@@ -73,7 +79,7 @@ bool LayerGroup::insert(Layer layer, int id)
             return 0;
         layerNum++;
         vec_id.insert(it_id, id);
-        vec_layer.insert(it_layer, layer);
+        vec_layer.insert(it_layer, pl);
         return 1;
     }
 }
@@ -87,7 +93,7 @@ bool LayerGroup::remove(int id)
     }
     if (p == -1) return 0;
     vector<int>::iterator it_id = vec_id.begin();
-    vector<Layer>::iterator it_layer = vec_layer.begin();
+    vector<LayerPtr>::iterator it_layer = vec_layer.begin();
     for(int i = 0; i < vec_id.size(); i++, it_id++, it_layer++)
     {
         if (vec_id[i] == id)
@@ -102,24 +108,24 @@ bool LayerGroup::remove(int id)
 
 QImage LayerGroup::get_preview()
 {
-    Mat rst(this->maxHeight, this->maxWidth, CV_8UC3, Scalar(255, 255, 255));
+    rst = Mat(this->maxHeight, this->maxWidth, CV_8UC3, Scalar(255, 255, 255));
 
     for(int i = 0; i < vec_layer.size(); i++)
     {
-        if (!vec_layer[i].visibility) continue;
-        Layer l = vec_layer[i];
-        for(int x = 0; x < l.M.rows; x++)
+        if (!vec_layer[i]->visibility) continue;
+        LayerPtr l = vec_layer[i];
+        for(int x = 0; x < l->M.rows; x++)
         {
-            for(int y = 0; y < l.M.cols; y++)
+            for(int y = 0; y < l->M.cols; y++)
             {
-                int xx = x + l.minRow, yy = y + l.minCol;
+                int xx = x + l->minRow, yy = y + l->minCol;
                 if (xx > maxHeight || yy > maxWidth)
                     continue;
                 bool flag = 0;
-                if (l.visionType == OPAQUE || l.valued.at<uchar>(x, y) > 0)
+                if (l->visionType == OPAQUE || l->valued.at<uchar>(x, y) > 0)
                     flag = 1;
                 if (flag)
-                    rst.at<Vec3b>(xx, yy) = l.M.at<Vec3b>(x, y);
+                    rst.at<Vec3b>(xx, yy) = l->M.at<Vec3b>(x, y);
             }
         }
     }
@@ -170,7 +176,7 @@ vector<int> LayerGroup::get_vec_id()
     return vec_id;
 }
 
-vector<Layer>& LayerGroup::get_vec_layer()
+vector<LayerPtr>& LayerGroup::get_vec_layer()
 {
     return vec_layer;
 }

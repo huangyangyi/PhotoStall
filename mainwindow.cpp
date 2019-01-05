@@ -76,7 +76,7 @@ void MainWindow::OpenFile()
         qDebug()<<path<<endl;
         Layer layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
         if (layergroup == nullptr) {
-            layergroup = new LayerGroup(layer.get_width(),layer.get_height());
+            layergroup = new LayerGroup(layer.get_height(),layer.get_width());
         }
         layergroup->insert(layer);
         qDebug()<<"Insert layer OK\n";

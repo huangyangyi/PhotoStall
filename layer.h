@@ -41,8 +41,12 @@ public:
     // you can add other friend classes
 
     Layer();
+    ~Layer();
+    Layer(Layer& l);
     Layer(string FILE_PATH, string name, Transparency visionType, bool visibility = 1, int minRow = 0, int minCol = 0);
     Layer(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol, Mat M);
+
+    Layer& operator= (Layer& l);
 
     void create(string FILE_PATH, string name, Transparency visionType, bool visibility = 1, int minRow = 0, int minCol = 0);
     void create(Mat M, string name, Transparency visionType, bool visibility = 1, int minRow = 0, int minCol = 0);
@@ -66,6 +70,15 @@ public:
 
     void set_visibility(bool vis) { this->visibility = vis; }
     bool get_visibility() { return this->visibility; }
+
+    void clear_valued()
+    {
+        valued = Mat(valued.rows, valued.cols, CV_8UC1, Scalar(0));
+    }
+    void fill_valued()
+    {
+        valued = Mat(valued.rows, valued.cols, CV_8UC1, Scalar(255));
+    }
 
     QImage toQImage_ref(QImage::Format format) {
         return QImage(M.data, M.cols, M.rows, static_cast<int>(M.step), format);
