@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>900</height>
+    <height>1870</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,7 +131,7 @@
    <property name="maximumSize">
     <size>
      <width>100</width>
-     <height>600</height>
+     <height>900</height>
     </size>
    </property>
    <property name="toolTip">
@@ -141,7 +141,7 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(244, 244, 244)</string>
+    <string notr="true"/>
    </property>
    <property name="floating">
     <bool>false</bool>
@@ -166,7 +166,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/移动.png);</string>
+      <string notr="true">image: url(:/choose.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -185,7 +185,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/直线.png);</string>
+      <string notr="true">image: url(:/line.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -204,7 +204,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/形状-椭圆形.png);</string>
+      <string notr="true">image: url(:/ellipse.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -223,7 +223,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/控件未选.png);</string>
+      <string notr="true">image: url(:/rectangle.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -242,7 +242,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/图片裁剪.png)</string>
+      <string notr="true">image: url(:/cut.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -261,7 +261,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/马赛克.png);</string>
+      <string notr="true">image: url(:/mosaic.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -280,8 +280,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>颜色</string>
@@ -299,14 +298,14 @@
    <property name="maximumSize">
     <size>
      <width>400</width>
-     <height>400</height>
+     <height>900</height>
     </size>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(243, 243, 243)</string>
+    <string notr="true"/>
    </property>
    <property name="floating">
     <bool>false</bool>
@@ -547,8 +546,8 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>650</width>
-     <height>800</height>
+     <width>1500</width>
+     <height>1200</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -569,7 +568,7 @@
    <property name="maximumSize">
     <size>
      <width>400</width>
-     <height>400</height>
+     <height>900</height>
     </size>
    </property>
    <property name="layoutDirection">
@@ -705,8 +704,8 @@
   </widget>
   <action name="action_open">
    <property name="icon">
-    <iconset>
-     <normaloff>:/文件夹-展开.png</normaloff>:/文件夹-展开.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/open.png</normaloff>:/open.png</iconset>
    </property>
    <property name="text">
     <string>&amp;打开</string>
@@ -714,8 +713,8 @@
   </action>
   <action name="action_new">
    <property name="icon">
-    <iconset>
-     <normaloff>:/添加.png</normaloff>:/添加.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/add.png</normaloff>:/add.png</iconset>
    </property>
    <property name="text">
     <string>&amp;新建</string>
@@ -723,8 +722,8 @@
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset>
-     <normaloff>:/保存.png</normaloff>:/保存.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/save.png</normaloff>:/save.png</iconset>
    </property>
    <property name="text">
     <string>&amp;保存</string>
@@ -732,8 +731,8 @@
   </action>
   <action name="action_saveas">
    <property name="icon">
-    <iconset>
-     <normaloff>:/另存.png</normaloff>:/另存.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/saveas.png</normaloff>:/saveas.png</iconset>
    </property>
    <property name="text">
     <string>&amp;另存为</string>
@@ -741,8 +740,8 @@
   </action>
   <action name="action_exit">
    <property name="icon">
-    <iconset>
-     <normaloff>:/关闭.png</normaloff>:/关闭.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/close.png</normaloff>:/close.png</iconset>
    </property>
    <property name="text">
     <string>&amp;关闭</string>
@@ -750,8 +749,8 @@
   </action>
   <action name="action_back">
    <property name="icon">
-    <iconset>
-     <normaloff>:/撤销.png</normaloff>:/撤销.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/revert.png</normaloff>:/revert.png</iconset>
    </property>
    <property name="text">
     <string>&amp;撤销</string>
@@ -759,8 +758,8 @@
   </action>
   <action name="action_recover">
    <property name="icon">
-    <iconset>
-     <normaloff>:/返回.png</normaloff>:/返回.png</iconset>
+    <iconset resource="icon/icon.qrc">
+     <normaloff>:/recover.png</normaloff>:/recover.png</iconset>
    </property>
    <property name="text">
     <string>&amp;重做</string>
@@ -781,11 +780,6 @@
     <string>&amp;绘图工具</string>
    </property>
   </action>
-  <action name="action_changeform">
-   <property name="text">
-    <string>格式转换</string>
-   </property>
-  </action>
   <action name="action__layer">
    <property name="text">
     <string>图层</string>
@@ -797,6 +791,8 @@
   <zorder>dock_special</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icon/icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
