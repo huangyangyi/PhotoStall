@@ -68,6 +68,9 @@ public:
 
     int get_height() { return this->height; }
 
+    void set_visionType(Transparency tsp) { this->visionType = tsp; }
+    Transparency get_visionType() { return this->visionType; }
+
     void set_visibility(bool vis) { this->visibility = vis; }
     bool get_visibility() { return this->visibility; }
 
