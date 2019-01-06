@@ -17,10 +17,13 @@ public:
     // Geometric transformation function
     void layerResize(Layer& layer,double fx,double fy);
     // 放缩
+	// fx,fy分别是x轴和y轴放缩的倍数
     void layerRotate(Layer& layer,double angle);
     // 旋转
+	// angle 是旋转的角度
     void layerTranslation(Layer& layer,int x,int y);
     // 平移
+	// x,y是在x轴y轴平移的距离，向右向上为正
 
     // Histogram
     Mat layerCalHist(Layer& layer);
@@ -52,6 +55,12 @@ public:
     void layerRect(Layer &layer, Rect rect, const Scalar& color,
                    int state, int thickness, int lineType, int shift);
     //画矩形
+	// state = 1,绘图,state = 0,擦除
+	// thickness是线条宽度，默认参数是1
+	// linetype 是线条种类，默认参数是8
+	// shift默认为0
+
+	// 滤镜
 };
 
 #endif // LAYERBASIC_H
