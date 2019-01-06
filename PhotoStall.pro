@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     layer.cpp \
     layergroup.cpp \
-    layerbasic.cpp
+    layerbasic.cpp \
+    imageqlabel.cpp
 
 HEADERS += \
         mainwindow.h \
     layer.h \
     layergroup.h \
-    layerbasic.h
+    layerbasic.h \
+    imageqlabel.h
 
 FORMS += \
         mainwindow.ui

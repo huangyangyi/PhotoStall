@@ -50,3 +50,6 @@ debug/moc_mainwindow.obj
 debug/PhotoStall.pdb
 debug/PhotoStall.vc.pdb
 debug/qrc_icon.obj
+*.obj
+*.exe
+*.ilk

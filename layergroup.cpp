@@ -130,7 +130,7 @@ QImage LayerGroup::get_preview()
         }
     }
 
-    return QImage(rst.data, rst.cols, rst.rows, static_cast<int>(rst.step), QImage::Format_RGB888);
+    return QImage(rst.data, rst.cols, rst.rows, static_cast<int>(rst.step), QImage::Format_RGB888).rgbSwapped();
 }
 
 bool LayerGroup::reorder(vector<int> new_id)
