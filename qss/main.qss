@@ -1,3 +1,13 @@
+
+/*TextColor:#57595B*/
+/*PanelColor:#FFFFFF*/
+/*BorderColor:#B6B6B6*/
+/*NormalColorStart:#E4E4E4*/
+/*NormalColorEnd:#E4E4E4*/
+/*DarkColorStart:#F6F6F6*/
+/*DarkColorEnd:#F6F6F6*/
+/*HighColor:#00BB9E*/
+
 QPalette{background:#FFFFFF;}*{outline:0px;color:#57595B;}
 
 QWidget[form="true"],QLabel[frameShape="1"]{
@@ -102,7 +112,7 @@ position:relative;
 left:10px;
 }
 
-.QPushButton,.QToolButton{
+.QPushButton{
 border-style:none;
 border:1px solid #B6B6B6;
 color:#57595B;
@@ -111,6 +121,12 @@ min-height:15px;
 border-radius:5px;
 background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #E4E4E4,stop:1 #E4E4E4);
 }
+
+.QToolButton{
+    padding:5px;
+    min-height:15px;
+    border-radius:5px;
+    }
 
 .QPushButton:hover,.QToolButton:hover{
 background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #F6F6F6,stop:1 #F6F6F6);
@@ -145,84 +161,15 @@ margin:1px 1px 2px 1px;
 background-color:rgba(238,0,0,128);
 }
 
-QRadioButton::indicator{
-width:15px;
-height:15px;
-}
-
-QRadioButton::indicator::unchecked{
-image:url(:/qss/flatwhite/radiobutton_unchecked.png);
-}
-
-QRadioButton::indicator::unchecked:disabled{
-image:url(:/qss/flatwhite/radiobutton_unchecked_disable.png);
-}
-
-QRadioButton::indicator::checked{
-image:url(:/qss/flatwhite/radiobutton_checked.png);
-}
-
-QRadioButton::indicator::checked:disabled{
-image:url(:/qss/flatwhite/radiobutton_checked_disable.png);
-}
 
 QGroupBox::indicator,QTreeWidget::indicator,QListWidget::indicator{
 padding:0px -3px 0px 0px;
 }
 
-QCheckBox::indicator,QGroupBox::indicator,QTreeWidget::indicator,QListWidget::indicator{
-width:13px;
-height:13px;
-}
 
-QCheckBox::indicator:unchecked,QGroupBox::indicator:unchecked,QTreeWidget::indicator:unchecked,QListWidget::indicator:unchecked{
-image:url(:/qss/flatwhite/checkbox_unchecked.png);
-}
-
-QCheckBox::indicator:unchecked:disabled,QGroupBox::indicator:unchecked:disabled,QTreeWidget::indicator:unchecked:disabled,QListWidget::indicator:disabled{
-image:url(:/qss/flatwhite/checkbox_unchecked_disable.png);
-}
-
-QCheckBox::indicator:checked,QGroupBox::indicator:checked,QTreeWidget::indicator:checked,QListWidget::indicator:checked{
-image:url(:/qss/flatwhite/checkbox_checked.png);
-}
-
-QCheckBox::indicator:checked:disabled,QGroupBox::indicator:checked:disabled,QTreeWidget::indicator:checked:disabled,QListWidget::indicator:checked:disabled{
-image:url(:/qss/flatwhite/checkbox_checked_disable.png);
-}
-
-QCheckBox::indicator:indeterminate,QGroupBox::indicator:indeterminate,QTreeWidget::indicator:indeterminate,QListWidget::indicator:indeterminate{
-image:url(:/qss/flatwhite/checkbox_parcial.png);
-}
-
-QCheckBox::indicator:indeterminate:disabled,QGroupBox::indicator:indeterminate:disabled,QTreeWidget::indicator:indeterminate:disabled,QListWidget::indicator:indeterminate:disabled{
-image:url(:/qss/flatwhite/checkbox_parcial_disable.png);
-}
-
-QTimeEdit::up-button,QDateEdit::up-button,QDateTimeEdit::up-button,QDoubleSpinBox::up-button,QSpinBox::up-button{
-image:url(:/qss/flatwhite/add_top.png);
-width:10px;
-height:10px;
-padding:2px 5px 0px 0px;
-}
-
-QTimeEdit::down-button,QDateEdit::down-button,QDateTimeEdit::down-button,QDoubleSpinBox::down-button,QSpinBox::down-button{
-image:url(:/qss/flatwhite/add_bottom.png);
-width:10px;
-height:10px;
-padding:0px 5px 2px 0px;
-}
-
-QTimeEdit::up-button:pressed,QDateEdit::up-button:pressed,QDateTimeEdit::up-button:pressed,QDoubleSpinBox::up-button:pressed,QSpinBox::up-button:pressed{
-top:-2px;
-}
-
-QTimeEdit::down-button:pressed,QDateEdit::down-button:pressed,QDateTimeEdit::down-button:pressed,QDoubleSpinBox::down-button:pressed,QSpinBox::down-button:pressed,QSpinBox::down-button:pressed{
-bottom:-2px;
-}
 
 QComboBox::down-arrow,QDateEdit[calendarPopup="true"]::down-arrow,QTimeEdit[calendarPopup="true"]::down-arrow,QDateTimeEdit[calendarPopup="true"]::down-arrow{
-image:url(:/qss/flatwhite/add_bottom.png);
+image:url(:/combobox.png);
 width:10px;
 height:10px;
 right:2px;
@@ -428,16 +375,6 @@ alternate-background-color:#F6F6F6;
 gridline-color:#B6B6B6;
 }
 
-QTreeView::branch:closed:has-children{
-margin:4px;
-border-image:url(:/qss/flatwhite/branch_open.png);
-}
-
-QTreeView::branch:open:has-children{
-margin:4px;
-border-image:url(:/qss/flatwhite/branch_close.png);
-}
-
 QTreeView,QListView,QTableView,QSplitter::handle,QTreeView::branch{
 background:#FFFFFF;
 }
@@ -561,48 +498,6 @@ QColorDialog QPushButton,QFileDialog QPushButton{
 min-width:80px;
 }
 
-QToolButton#qt_calendar_prevmonth{
-icon-size:0px;
-min-width:20px;
-image:url(:/qss/flatwhite/calendar_prevmonth.png);
-}
-
-QToolButton#qt_calendar_nextmonth{
-icon-size:0px;
-min-width:20px;
-image:url(:/qss/flatwhite/calendar_nextmonth.png);
-}
-
-QToolButton#qt_calendar_prevmonth,QToolButton#qt_calendar_nextmonth,QToolButton#qt_calendar_monthbutton,QToolButton#qt_calendar_yearbutton{
-border:0px solid #57595B;
-border-radius:3px;
-margin:3px 3px 3px 3px;
-padding:3px;
-background:none;
-}
-
-QToolButton#qt_calendar_prevmonth:hover,QToolButton#qt_calendar_nextmonth:hover,QToolButton#qt_calendar_monthbutton:hover,QToolButton#qt_calendar_yearbutton:hover,QToolButton#qt_calendar_prevmonth:pressed,QToolButton#qt_calendar_nextmonth:pressed,QToolButton#qt_calendar_monthbutton:pressed,QToolButton#qt_calendar_yearbutton:pressed{
-border:1px solid #B6B6B6;
-}
-
-QCalendarWidget QSpinBox#qt_calendar_yearedit{
-margin:2px;
-}
-
-QCalendarWidget QToolButton::menu-indicator{
-image:None;
-}
-
-QCalendarWidget QTableView{
-border-width:0px;
-}
-
-QCalendarWidget QWidget#qt_calendar_navigationbar{
-border:1px solid #B6B6B6;
-border-width:1px 1px 0px 1px;
-background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #E4E4E4,stop:1 #E4E4E4);
-}
-
 QComboBox QAbstractItemView::item{
 min-height:20px;
 min-width:10px;
@@ -637,12 +532,3 @@ background:#FFFFFF;
 border-color:#E4E4E4;
 color:#B6B6B6;
 }
-
-/*TextColor:#57595B*/
-/*PanelColor:#FFFFFF*/
-/*BorderColor:#B6B6B6*/
-/*NormalColorStart:#E4E4E4*/
-/*NormalColorEnd:#E4E4E4*/
-/*DarkColorStart:#F6F6F6*/
-/*DarkColorEnd:#F6F6F6*/
-/*HighColor:#00BB9E*/

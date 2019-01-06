@@ -16,5 +16,6 @@
         <file>saveas.png</file>
         <file>setting.png</file>
         <file>text.png</file>
+        <file>combobox.png</file>
     </qresource>
 </RCC>
