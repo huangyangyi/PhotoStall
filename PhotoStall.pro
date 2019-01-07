@@ -30,14 +30,20 @@ SOURCES += \
     layer.cpp \
     layergroup.cpp \
     layerbasic.cpp \
-    imageqlabel.cpp
+    imageqlabel.cpp \
+    layertablemodel.cpp \
+    layerdelegate.cpp \
+    layertableview.cpp
 
 HEADERS += \
         mainwindow.h \
     layer.h \
     layergroup.h \
     layerbasic.h \
-    imageqlabel.h
+    imageqlabel.h \
+    layertablemodel.h \
+    layerdelegate.h \
+    layertableview.h
 
 FORMS += \
         mainwindow.ui

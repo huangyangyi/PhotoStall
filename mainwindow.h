@@ -15,6 +15,7 @@
 #include "layergroup.h"
 #include "imageqlabel.h"
 #include "layerbasic.h"
+#include "layertableview.h"
 namespace Ui {
 class MainWindow;
 }
@@ -42,8 +43,10 @@ private:
     QDockWidget *dock_center;
     QString current_path_;
     ImageQLabel *imgLabel;
+    LayerTableView *layer_table_;
     qreal zoom_level_=1.0;
     void InitImage();
+    void InitLayerView();
     void ConnectFile();
     void ConnectAction();
     virtual void wheelEvent(QWheelEvent * event);
