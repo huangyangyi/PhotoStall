@@ -34,10 +34,8 @@ void LayerBasic::layerRotate(Layer& layer,double angle)
 
 void LayerBasic::layerTranslation(Layer &layer, int x, int y)
 {
-	if (layer.minCol + x > 0)layer.minCol += x;
-	else layer.minCol = 0;
-	if (layer.minRow + y > 0)layer.minRow += y;
-	else layer.minRow = 0;
+	layer.minCol += x;
+	layer.minRow += y;
 }
 
 Mat LayerBasic::layerCalHist(Layer &layer)
@@ -121,6 +119,10 @@ void LayerBasic::layerTailoring(Layer &layer,Rect rect)
 {
     Mat src= layer.M;
     Mat dst = src(rect);
+	layer.minCol = rect.x;
+	layer.minRow = rect.y;
+	layer.width = rect.width;
+	layer.height = rect.height;
     layer.M = dst;
 }
 
