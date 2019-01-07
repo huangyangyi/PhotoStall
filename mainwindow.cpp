@@ -91,6 +91,7 @@ void MainWindow::OpenFile()
             layer_group_ = new LayerGroup(layer.get_height(),layer.get_width());
         }
         layer_group_->insert(layer);
+        current_layer_ = layer_group_->get_vec_layer()[1];
         qDebug()<<"Insert layer OK\n";
     }
     MainWindow::RefreshView();

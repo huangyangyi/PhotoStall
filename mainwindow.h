@@ -32,7 +32,8 @@ private:
     QScrollArea *scroll_area_;
     ACTION_TYPE action_mode_;
     Ui::MainWindow *ui;
-    LayerGroup *layer_group_=nullptr;
+    LayerGroup *layer_group_=nullptr;//当前处理的图层组
+    Layer *current_layer_=nullptr;//当前处理的图层
     //打开文件
     QDockWidget *dock_center;
     QString current_path_;

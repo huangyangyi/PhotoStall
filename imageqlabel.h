@@ -19,6 +19,7 @@ public:
     void SetZoomLevel(qreal delta_level);
     void ResetZoom();
     void RefreshView();
+    qreal GetZoomLevel()const;
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
 };

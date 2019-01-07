@@ -35,3 +35,8 @@ void ImageQLabel::ResetZoom(){
     zoom_level_=1.0;
     RefreshView();
 }
+
+
+qreal ImageQLabel::GetZoomLevel()const{
+    return zoom_level_;
+}
