@@ -47,13 +47,13 @@ public:
     void layerTailoring(Layer &layer,Rect rect);
 	// 裁剪
     void layerLine(Layer &layer,Point pt1,Point pt2,const Scalar& color,
-                   int state, int thickness,int lineType,int shift);
+                   int state=1, int thickness=1,int lineType=8,int shift=0);
     //画线
     void layerCircle(Layer &layer,Point center,int radius, const Scalar& color,
-                     int state, int thickness, int lineType, int shift);
+                     int state=1, int thickness=1, int lineType=8, int shift=0);
     //画圆
     void layerRect(Layer &layer, Rect rect, const Scalar& color,
-                   int state, int thickness, int lineType, int shift);
+                   int state=1, int thickness=1, int lineType=8, int shift=0);
     //画矩形
 	// state = 1,绘图,state = 0,擦除
 	// thickness是线条宽度，默认参数是1
