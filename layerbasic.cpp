@@ -129,33 +129,45 @@ void LayerBasic::layerTailoring(Layer &layer,Rect rect)
 void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & color,
                            int state=1, int thickness=1, int lineType=8, int shift=0)
 {
-    if(state == 1)//draw
-        line(layer.M, pt1, pt2, color, thickness, lineType, shift);
-    else//erase
-        line(layer.M, pt1, pt2, Scalar(255,255,255), thickness, lineType, shift);
-    if(layer.visionType == TRANSPARENT)
-        line(layer.valued, pt1, pt2, Scalar(255), thickness, lineType, shift);
+	if (state == 1)//draw
+	{
+		line(layer.M, pt1, pt2, color, thickness, lineType, shift);
+		line(layer.valued, pt1, pt2, Scalar(1), thickness, lineType, shift);
+	}
+	else//erase
+	{
+		line(layer.M, pt1, pt2, Scalar(255, 255, 255), thickness, lineType, shift);
+		line(layer.valued, pt1, pt2, Scalar(0), thickness, lineType, shift);
+	}
 }
 
 void LayerBasic::layerCircle(Layer & layer, Point center, int radius, const Scalar & color,
                              int state=1, int thickness=1, int lineType=8, int shift=0)
 {
-    if(state == 1)
-        circle(layer.M, center, radius, color, thickness, lineType, shift);
-    else
-        circle(layer.M, center, radius, Scalar(255,255,255), thickness, lineType, shift);
-    if(layer.visionType == TRANSPARENT)
-        circle(layer.valued, center, radius, Scalar(255), thickness, lineType, shift);
+	if (state == 1)
+	{
+		circle(layer.M, center, radius, color, thickness, lineType, shift);
+		circle(layer.valued, center, radius, Scalar(1), thickness, lineType, shift);
+	}
+	else 
+	{
+		circle(layer.M, center, radius, Scalar(255, 255, 255), thickness, lineType, shift);
+		circle(layer.valued, center, radius, Scalar(0), thickness, lineType, shift);
+	}
 }
 
 void LayerBasic::layerRect(Layer & layer, Rect rect, const Scalar & color,
                            int state=1, int thickness=1, int lineType=8, int shift=0)
 {
-    if(state == 1)
-        rectangle(layer.M, rect, color, thickness, lineType, shift);
-    else
-        rectangle(layer.M, rect, Scalar(255,255,255), thickness, lineType, shift);
-    if(layer.visionType == TRANSPARENT)
-        rectangle(layer.valued, rect, Scalar(255), thickness, lineType, shift);
+	if (state == 1)
+	{
+		rectangle(layer.M, rect, color, thickness, lineType, shift);
+		rectangle(layer.valued, rect, Scalar(1), thickness, lineType, shift);
+	}
+	else
+	{
+		rectangle(layer.M, rect, Scalar(255, 255, 255), thickness, lineType, shift);
+		rectangle(layer.valued, rect, Scalar(0), thickness, lineType, shift);
+	}
 }
 
