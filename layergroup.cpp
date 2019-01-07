@@ -119,7 +119,9 @@ QImage LayerGroup::get_preview()
             for(int y = 0; y < l->M.cols; y++)
             {
                 int xx = x + l->minRow, yy = y + l->minCol;
-                if (xx > maxHeight || yy > maxWidth)
+                if (xx >= maxHeight || yy >= maxWidth)
+                    continue;
+                if (xx < 0 || yy < 0)
                     continue;
                 bool flag = 0;
                 if (l->visionType == OPAQUE || l->valued.at<uchar>(x, y) > 0)

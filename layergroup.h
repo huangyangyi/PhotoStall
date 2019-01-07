@@ -37,6 +37,12 @@ public:
     vector<int> get_vec_id();
 
     vector<Layer*>& get_vec_layer();
+
+    void set_maxHeight(int x) { this->maxHeight = x; }
+    int get_maxHeight() { return this->maxHeight; }
+
+    void set_maxWidth(int x) { this->maxWidth = x; }
+    int get_maxWidth() { return this->maxWidth; }
 };
 
 extern Mat rst;
