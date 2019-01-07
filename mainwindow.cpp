@@ -55,6 +55,8 @@ void MainWindow::ConnectFile()
 void MainWindow::ConnectAction(){
     connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(SetActionDrag()));
     connect(imgLabel,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
+//    connect(*current_layer_,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
+    connect(ui->pushButton_line,SIGNAL(clicked()),this,SLOT(Lines()));
 }
 void MainWindow::SetActionDrag(){
     if (action_mode_!=DRAG_PREVIEW) action_mode_ = DRAG_PREVIEW;
@@ -128,7 +130,7 @@ void MainWindow::RefreshView()
     else {
         QImage preview = layer_group_->get_preview();
         imgLabel->SetPreview(QPixmap::fromImage(preview));
-        imgLabel->resize(preview.width(),preview.height());
+        imgLabel->RefreshView();
     }
 }
 
@@ -143,10 +145,22 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
 {
     QPoint delta = endpoint - startpoint;
+    Point s,e;
+    s.x=startpoint.x();
+    s.y=startpoint.y();
+    e.x=endpoint.x();
+    e.y=endpoint.y();
+    double zoom_level = imgLabel->GetZoomLevel();
+    s/=zoom_level;
+    e/=zoom_level;
     switch (action_mode_)
     {
     case DRAG_PREVIEW:
         Scroll(delta);
+        break;
+    case DRAW_LINES:
+        DrawType.layerLine(*current_layer_,s,e,Scalar(0,0,0),1,1,8,0);
+        RefreshView();
         break;
     default:
         break;
@@ -166,4 +180,10 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     if (event->key()==Qt::Key_0&&QApplication::keyboardModifiers()==Qt::ControlModifier){
         imgLabel->ResetZoom();
     }
+}
+
+void MainWindow::Lines()
+{
+    if (action_mode_!=DRAW_LINES) action_mode_ = DRAW_LINES;
+    else action_mode_ = NO_ACTION;
 }

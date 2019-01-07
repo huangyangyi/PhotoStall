@@ -3,6 +3,7 @@
 
 #include "layer.h"
 #include <vector>
+#include <QObject>
 const int defaultSize = 1000;
 
 typedef Layer* LayerPtr;

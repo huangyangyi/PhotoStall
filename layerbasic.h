@@ -2,6 +2,7 @@
 #define LAYERBASIC_H
 
 #include "layer.h"
+#include <QObject>
 
 // It is a friend class of Layer
 // you can modify a layer directly
