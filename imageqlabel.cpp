@@ -22,6 +22,7 @@ void ImageQLabel::SetZoomLevel(qreal delta_level)
 void ImageQLabel::RefreshView(){
     if (preview_.isNull()) return ;
     resize(preview_.size()*zoom_level_);
+    clear();
     setPixmap(preview_.scaled(preview_.size()*zoom_level_));
 }
 void ImageQLabel::mousePressEvent(QMouseEvent *event){
