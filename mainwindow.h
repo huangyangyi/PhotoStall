@@ -29,7 +29,9 @@ private:
     enum ACTION_TYPE {//different action modes
         NO_ACTION,//doing nothing
         DRAG_PREVIEW,//drag preview image
-        DRAW_LINES
+        DRAW_LINES,
+        DRAW_CIRCLE,
+        DRAW_RECT
     };
     QScrollArea *scroll_area_;
     ACTION_TYPE action_mode_;
@@ -38,6 +40,7 @@ private:
     Layer *current_layer_=nullptr;//当前处理的图层
 
     LayerBasic DrawType;
+    Rect rect;
     //打开文件
     QDockWidget *dock_center;
     QString current_path_;
@@ -59,6 +62,8 @@ private slots:
     void DragSlot(QPoint startpoint,QPoint endpoint);
 
     void Lines();
+    void Circles();
+    void Rect();
 };
 
 #endif // MAINWINDOW_H

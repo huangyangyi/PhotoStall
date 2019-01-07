@@ -127,7 +127,7 @@ void LayerBasic::layerTailoring(Layer &layer,Rect rect)
 }
 
 void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & color,
-                           int state=1, int thickness=1, int lineType=8, int shift=0)
+                           int state, int thickness, int lineType, int shift)
 {
 	if (state == 1)//draw
 	{
@@ -142,7 +142,7 @@ void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & c
 }
 
 void LayerBasic::layerCircle(Layer & layer, Point center, int radius, const Scalar & color,
-                             int state=1, int thickness=1, int lineType=8, int shift=0)
+                             int state, int thickness, int lineType, int shift)
 {
 	if (state == 1)
 	{
@@ -157,7 +157,7 @@ void LayerBasic::layerCircle(Layer & layer, Point center, int radius, const Scal
 }
 
 void LayerBasic::layerRect(Layer & layer, Rect rect, const Scalar & color,
-                           int state=1, int thickness=1, int lineType=8, int shift=0)
+                           int state, int thickness, int lineType, int shift)
 {
 	if (state == 1)
 	{

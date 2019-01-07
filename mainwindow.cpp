@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include<QDebug>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -55,8 +56,10 @@ void MainWindow::ConnectFile()
 void MainWindow::ConnectAction(){
     connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(SetActionDrag()));
     connect(imgLabel,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
-//    connect(*current_layer_,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
+
     connect(ui->pushButton_line,SIGNAL(clicked()),this,SLOT(Lines()));
+    connect(ui->pushButton_ciecle,SIGNAL(clicked()),this,SLOT(Circles()));
+    connect(ui->pushButton_rectangle,SIGNAL(clicked()),this,SLOT(Rect()));
 }
 void MainWindow::SetActionDrag(){
     if (action_mode_!=DRAG_PREVIEW) action_mode_ = DRAG_PREVIEW;
@@ -153,13 +156,44 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     double zoom_level = imgLabel->GetZoomLevel();
     s/=zoom_level;
     e/=zoom_level;
+
+
+
+
     switch (action_mode_)
     {
     case DRAG_PREVIEW:
         Scroll(delta);
         break;
     case DRAW_LINES:
-        DrawType.layerLine(*current_layer_,s,e,Scalar(0,0,0),1,1,8,0);
+        DrawType.layerLine(*current_layer_,s,e,Scalar(0,0,0));
+        RefreshView();
+        break;
+    case DRAW_CIRCLE:
+        DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)), Scalar(0,0,0));
+        RefreshView();
+        break;
+    case DRAW_RECT:
+        int mid,height,weight;
+        if(s.x>e.x)
+        {
+            mid=s.x;
+            s.x=e.x;
+            e.x=mid;
+        }
+        if(s.y<e.y)
+        {
+            mid=s.y;
+            s.y=e.y;
+            e.y=mid;
+        }
+        height=s.y-e.y;
+        weight=e.x-s.x;
+        rect.x=e.x;
+        rect.y=e.y;
+        rect.height=height;
+        rect.width=weight;
+        DrawType.layerRect(*current_layer_, rect, Scalar(0,0,0));
         RefreshView();
         break;
     default:
@@ -185,5 +219,17 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 void MainWindow::Lines()
 {
     if (action_mode_!=DRAW_LINES) action_mode_ = DRAW_LINES;
+    else action_mode_ = NO_ACTION;
+}
+
+void MainWindow::Circles()
+{
+    if (action_mode_!=DRAW_CIRCLE) action_mode_ = DRAW_CIRCLE;
+    else action_mode_ = NO_ACTION;
+}
+
+void MainWindow::Rect()
+{
+    if (action_mode_!=DRAW_RECT) action_mode_ = DRAW_RECT;
     else action_mode_ = NO_ACTION;
 }
