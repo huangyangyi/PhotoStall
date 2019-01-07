@@ -31,7 +31,7 @@ private:
     // Size
     int minRow, minCol;
     // Position of this layer on the Canvas
-    Mat M, valued;
+    Mat M, valued, thumbNail;
 
 public:
     static int layerCount;
@@ -86,6 +86,8 @@ public:
     QImage toQImage_ref(QImage::Format format) {
         return QImage(M.data, M.cols, M.rows, static_cast<int>(M.step), format);
     }
+
+    QImage getThumbNail(int height, int width);
 };
 
 #endif // LAYER_H

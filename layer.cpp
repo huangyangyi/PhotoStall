@@ -111,3 +111,8 @@ void Layer::create(Mat M, string name, Transparency visionType, bool visibility,
     this->height = M.rows;
 }
 
+QImage Layer::getThumbNail(int width, int height)
+{
+    resize(M, thumbNail, Size(width, height), 0, 0, INTER_NEAREST);
+    return QImage(thumbNail.data, thumbNail.cols, thumbNail.rows, static_cast<int>(thumbNail.step), QImage::Format_RGB888).rgbSwapped();
+}
