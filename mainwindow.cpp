@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     InitImage();        // 初始化图像QLabel
 
-
+    InitLayerView();
     ConnectAction();    // Initialize the action connection
 
     //皮肤！

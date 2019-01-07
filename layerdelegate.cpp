@@ -35,7 +35,7 @@ void LayerDelegate::paint(QPainter * painter, const QStyleOptionViewItem & optio
 {
 
 
-    if (index.column() == 1) // value column
+    if (index.column() == 2) // value column
     {
         if (option.state & QStyle::State_Selected)
             painter->fillRect(option.rect, option.palette.highlight());
@@ -43,7 +43,7 @@ void LayerDelegate::paint(QPainter * painter, const QStyleOptionViewItem & optio
         QImage image = qvariant_cast<QImage>(index.data(Qt::DecorationRole));
         //QImage image = index.model()->data(index, Qt::DecorationRole).toString();
         QRect rect = option.rect;
-        int x = rect.x() + 20;
+        int x = rect.x() + 10;
         int y = rect.y() + 5;
 
         QBrush brush;
@@ -54,7 +54,7 @@ void LayerDelegate::paint(QPainter * painter, const QStyleOptionViewItem & optio
         //Draw image
         painter->drawImage(x, y, image);
 
-        QRect textRect(rect.x() + 70, rect.y(), rect.width() - 70, rect.height());
+        QRect textRect(rect.x() + 60, rect.y(), rect.width() - 60, rect.height());
 
         QString layerName = index.model()->data(index, Qt::DisplayRole).toString();
         QTextOption textOption = Qt::AlignLeft | Qt::AlignVCenter;

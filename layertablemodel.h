@@ -20,8 +20,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role);
-    //void deleteItem(int index);
-    //void addItem(QString &layerName, QImage &thumbnail, bool isShow = true);
+    void deleteItem(int index);
+    void addItem(Layer *new_layer);
     void refreshModel();
     QModelIndex selecttedIndex(int row);
 
