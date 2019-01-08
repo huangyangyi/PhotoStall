@@ -340,6 +340,7 @@ void MainWindow::Rotate()
     RefreshView();
 }
 
+//缩放
 void MainWindow::Resize()
 {
     QString str = ui->lineEdit_length->text();
