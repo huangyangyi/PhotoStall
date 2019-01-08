@@ -80,7 +80,7 @@ void LayerTableView::itemClicked(const QModelIndex& index)
 
 void LayerTableView::deleteLayer(int layer_id)
 {
-    model->deleteItem(model->getSelecttedRow());
+    //model->deleteItem(model->getSelecttedRow());
     model->refreshModel();
 
     QModelIndex tmp = model->selecttedIndex(0);
