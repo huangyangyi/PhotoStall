@@ -3,7 +3,7 @@
 # Project created by QtCreator 2018-12-12T19:59:07
 #
 #-------------------------------------------------
-
+RC_ICONS = PhotoStall.ico
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

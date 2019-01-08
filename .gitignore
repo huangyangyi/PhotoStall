@@ -53,3 +53,5 @@ debug/qrc_icon.obj
 *.obj
 *.exe
 *.ilk
+PhotoStall_resource.rc
+debug/PhotoStall_resource.res
