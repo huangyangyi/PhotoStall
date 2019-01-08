@@ -15,6 +15,7 @@ Layer::Layer()
     minCol = minRow = 0;
     width = height = 0;
     id = ++layerCount;
+    angle = 0;
     M = Mat(0, 0, CV_8UC3, Scalar(255, 255, 255));
     valued = Mat(0, 0, CV_8UC1, Scalar(255));
 }
@@ -35,6 +36,7 @@ Layer::Layer(Layer& l)
     this->width = l.width;
     this->height = l.height;
     this->id = l.id;
+    this->angle = l.angle;
     this->M = l.M.clone();
     this->valued = l.valued.clone();
 }
@@ -47,6 +49,7 @@ Layer::Layer(string FILE_PATH, string name, Transparency visionType, bool visibi
     id = ++layerCount;
     width = M.cols;
     height = M.rows;
+    angle = 0;
 }
 
 Layer::Layer(string name, Transparency visionType, int width, int height, bool visibility, int minRow, int minCol, Mat M)
@@ -54,6 +57,7 @@ Layer::Layer(string name, Transparency visionType, int width, int height, bool v
 {
     this->M = M.clone();
     valued = Mat(height, width, CV_8UC1, Scalar(255));
+    this->angle = 0;
 }
 
 Layer& Layer::operator= (Layer& l)
@@ -68,6 +72,7 @@ Layer& Layer::operator= (Layer& l)
     this->id = l.id;
     this->M = l.M.clone();
     this->valued = l.valued.clone();
+    this->angle = l.angle;
 
     return *this;
 }
@@ -80,6 +85,7 @@ void Layer::create(string FILE_PATH, string name, Transparency visionType, bool 
     this->visibility = visibility;
     this->minRow = minRow;
     this->minCol = minCol;
+    this->angle = 0;
     width = M.cols;
     height = M.rows;
     valued = Mat(M.rows, M.cols, CV_8UC1, Scalar(255));
@@ -96,6 +102,7 @@ void Layer::create(string name, Transparency visionType, int width, int height, 
     this->minCol = minCol;
     this->width = width;
     this->height = height;
+    this->angle = 0;
 }
 
 void Layer::create(Mat M, string name, Transparency visionType, bool visibility, int minRow, int minCol)
@@ -109,6 +116,7 @@ void Layer::create(Mat M, string name, Transparency visionType, bool visibility,
     this->minCol = minCol;
     this->width = M.cols;
     this->height = M.rows;
+    this->angle = 0;
 }
 
 QImage Layer::getThumbNail(int width, int height)

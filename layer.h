@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QWidget>
 #include <QImage>
+#include <QDebug>
+#include <cmath>
 #include <cstring>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
@@ -14,6 +16,10 @@ using namespace std;
 using namespace cv;
 
 enum Transparency { TRANSPARENT, OPAQUE };
+
+const double PI = acos(-1);
+const double EPS = 1e-6;
+
 class Layer
 {
 private:
@@ -31,8 +37,9 @@ private:
     // Size
     int minRow, minCol;
     // Position of this layer on the Canvas
+    double angle;
+    // rotation
     Mat M, valued, thumbNail;
-
 public:
     static int layerCount;
     friend class LayerGroup;
@@ -87,6 +94,7 @@ public:
         return QImage(M.data, M.cols, M.rows, static_cast<int>(M.step), format);
     }
 
+    void set_angle(double theta) { angle = PI * theta / 180; }
     QImage getThumbNail(int height, int width);
 };
 

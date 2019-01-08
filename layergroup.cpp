@@ -58,6 +58,7 @@ bool LayerGroup::insert(Layer layer, int id)
         vec_layer.push_back(pl);
         swap(vec_id[layerNum - 1], vec_id[layerNum - 2]);
         swap(vec_layer[layerNum - 1], vec_layer[layerNum - 2]);
+        emit inserted(id);
         return 1;
     }
     else
@@ -80,6 +81,7 @@ bool LayerGroup::insert(Layer layer, int id)
         layerNum++;
         vec_id.insert(it_id, id);
         vec_layer.insert(it_layer, pl);
+        emit inserted(id);
         return 1;
     }
 }
@@ -103,22 +105,27 @@ bool LayerGroup::remove(int id)
             break;
         }
     }
+    emit removed(id);
     return 1;
 }
 
 QImage LayerGroup::get_preview()
 {
     rst = Mat(this->maxHeight, this->maxWidth, CV_8UC3, Scalar(255, 255, 255));
+    qDebug() << this->maxHeight << ' ' << this->maxWidth << endl;
 
     for(int i = 0; i < vec_layer.size(); i++)
     {
         if (!vec_layer[i]->visibility) continue;
         LayerPtr l = vec_layer[i];
+        int halfRows = l->M.rows / 2;
+        int halfCols = l->M.cols / 2;
         for(int x = 0; x < l->M.rows; x++)
         {
             for(int y = 0; y < l->M.cols; y++)
             {
-                int xx = x + l->minRow, yy = y + l->minCol;
+                int xx = l->minRow + halfRows - (y - halfCols) * sin(l->angle) + (x - halfRows) * cos(l->angle);
+                int yy = l->minCol + halfCols + (y - halfCols) * cos(l->angle) + (x - halfRows) * sin(l->angle);
                 if (xx >= maxHeight || yy >= maxWidth)
                     continue;
                 if (xx < 0 || yy < 0)
@@ -127,11 +134,19 @@ QImage LayerGroup::get_preview()
                 if (l->visionType == OPAQUE || l->valued.at<uchar>(x, y) > 0)
                     flag = 1;
                 if (flag)
+                {
                     rst.at<Vec3b>(xx, yy) = l->M.at<Vec3b>(x, y);
+                    if (fabs(l->angle) > EPS && fabs(l->angle - PI) > EPS)
+                    {
+                        if (xx > 0) rst.at<Vec3b>(xx-1, yy) = l->M.at<Vec3b>(x, y);
+                        if (yy > 0) rst.at<Vec3b>(xx, yy-1) = l->M.at<Vec3b>(x, y);
+                    }
+                }
             }
         }
     }
 
+//    imshow("test", rst);
     return QImage(rst.data, rst.cols, rst.rows, static_cast<int>(rst.step), QImage::Format_RGB888).rgbSwapped();
 }
 

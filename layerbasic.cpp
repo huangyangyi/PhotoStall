@@ -15,21 +15,9 @@ void LayerBasic::layerResize(Layer &layer, double fx, double fy)
 
 void LayerBasic::layerRotate(Layer& layer,double angle)
 {
-    Mat src = layer.M;
-    Mat dst;
-
-    Size src_sz = src.size();
-    Size dst_sz(src_sz.height, src_sz.width);
-    int len = std::max(src.cols, src.rows);
-
-    //指定旋转中心
-    Point2f center(len / 2., len / 2.);
-    //获取旋转矩阵（2x3矩阵）
-    Mat rot_mat = cv::getRotationMatrix2D(center, angle, 1.0);
-    //根据旋转矩阵进行仿射变换
-    warpAffine(src, dst, rot_mat, dst_sz);
-
-    layer.M = dst;
+    layer.angle += PI * angle / 180;
+    while(layer.angle > PI * 2)
+        layer.angle -= PI * 2;
 }
 
 void LayerBasic::layerTranslation(Layer &layer, int x, int y)

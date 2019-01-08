@@ -8,13 +8,19 @@ const int defaultSize = 1000;
 
 typedef Layer* LayerPtr;
 
-class LayerGroup
+class LayerGroup : public QObject
 {
+    Q_OBJECT
 private:
     int layerNum;
     int maxHeight, maxWidth;
     vector<int> vec_id;
     vector<Layer*> vec_layer;
+
+signals:
+    void inserted(int);
+    void removed(int);
+
 public:
     LayerGroup(int maxHeight = defaultSize, int maxWidth = defaultSize);
     LayerGroup(string file_name, string name = "unknown");
@@ -39,10 +45,20 @@ public:
 
     vector<Layer*>& get_vec_layer();
 
-    void set_maxHeight(int x) { this->maxHeight = x; }
+    void set_maxHeight(int x)
+    {
+        this->maxHeight = x;
+        vec_layer[0]->M = Mat(maxHeight, maxWidth, CV_8UC3, Scalar(255, 255, 255));
+        vec_layer[0]->valued = Mat(maxHeight, maxWidth, CV_8UC1, Scalar(255));
+    }
     int get_maxHeight() { return this->maxHeight; }
 
-    void set_maxWidth(int x) { this->maxWidth = x; }
+    void set_maxWidth(int x)
+    {
+        this->maxWidth = x;
+        vec_layer[0]->M = Mat(maxHeight, maxWidth, CV_8UC3, Scalar(255, 255, 255));
+        vec_layer[0]->valued = Mat(maxHeight, maxWidth, CV_8UC1, Scalar(255));
+    }
     int get_maxWidth() { return this->maxWidth; }
 };
 

@@ -103,6 +103,7 @@ void MainWindow::OpenFile()
         qDebug()<<"Insert layer OK\n";
     }
     MainWindow::RefreshView();
+
 }
 //保存
 void MainWindow::SaveFile()
