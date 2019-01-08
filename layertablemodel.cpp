@@ -71,6 +71,12 @@ bool LayerTableModel::setData(const QModelIndex &index,const QVariant &value,int
         emit(dataChanged(index,index));
         return true;
     }
+    else if (role == Qt::EditRole && value.type()==QVariant::String)
+    {
+        (*layerlist)[index.row()]->set_name(value.toString().toStdString());
+        emit(dataChanged(index,index));
+        return true;
+    }
     return false;
 }
 void LayerTableModel::changeLayerVisibility(const QModelIndex &index)
@@ -80,7 +86,7 @@ void LayerTableModel::changeLayerVisibility(const QModelIndex &index)
 
 void LayerTableModel::changeLayerVisionType(const QModelIndex &index)
 {
-    if (index.isValid()&&index.column()==0) setData(index,!((*layerlist)[index.row()]->get_visibility()),Qt::CheckStateRole);
+    if (index.isValid()&&index.column()==1) setData(index,!((*layerlist)[index.row()]->get_visionType()),Qt::CheckStateRole);
 }
 void LayerTableModel::refreshModel(){
     beginResetModel();
@@ -113,7 +119,7 @@ int LayerTableModel::columnCount(const QModelIndex &parent) const
     Q_UNUSED(parent);
     return 3;
 }
-void LayerTableModel::deleteItem(int index){}
-void LayerTableModel::addItem(Layer *new_layer){
+void LayerTableModel::deleteItem(int index){
 
-};
+}
+void LayerTableModel::addItem(){}

@@ -3,25 +3,6 @@
 LayerDelegate::LayerDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
 {
-    QImage gridImage(200, 200, QImage::Format_RGB32);
-    QRgb grey = QColor(204, 204, 204).rgb();
-    QRgb white = QColor(255, 255, 255).rgb();
-    for (int i = 0; i < 200; i++)
-    for (int j = 0; j < 200; j++)
-    {
-        int tmpX = i % 10;
-        int tmpY = j % 10;
-        if (tmpX < 5)
-        {
-            gridImage.setPixel(i, j, tmpY < 5 ? grey : white);
-        }
-        else
-        {
-            gridImage.setPixel(i, j, tmpY < 5 ? white : grey);
-        }
-    }
-
-    m_gridPixmap = QPixmap::fromImage(gridImage);
 }
 
 LayerDelegate::~LayerDelegate()
@@ -47,10 +28,6 @@ void LayerDelegate::paint(QPainter * painter, const QStyleOptionViewItem & optio
         int y = rect.y() + 5;
 
         QBrush brush;
-        //Draw grid background
-        brush.setTexture(m_gridPixmap);
-        painter->fillRect(x, y, 40, 40, brush);
-
         //Draw image
         painter->drawImage(x, y, image);
 
@@ -81,7 +58,7 @@ QWidget *LayerDelegate::createEditor(QWidget *parent,
     const QModelIndex &index) const
 {
     qDebug() << "createEditor";
-    if (index.column() == 1) // value column
+    if (index.column() == 2) // value column
     {
         QLineEdit* edit = new QLineEdit(parent);
         edit->setFixedHeight(33);

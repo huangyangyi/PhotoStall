@@ -25,6 +25,7 @@ LayerTableView::LayerTableView(vector<Layer *> *layerlist,QWidget *parent)
 
     //When click on the checkbox it will emit signal twice.Click on the cell emit only once.
     connect(this, SIGNAL(clicked(const QModelIndex&)), this, SLOT(itemClicked(const QModelIndex&)));
+    connect(model,SIGNAL(dataChanged(const QModelIndex&,const QModelIndex&,const QVector<int> &)),this,SLOT(modelDataChanged(const QModelIndex&,const QModelIndex&,const QVector<int> &)));
 }
 
 LayerTableView::~LayerTableView()
@@ -49,10 +50,9 @@ void LayerTableView::contextMenuEvent(QContextMenuEvent * event)
 
 }
 
-void LayerTableView::addNewLayer()
+void LayerTableView::addNewLayer(int layer_id)
 {
-    //model->addItem(QString(), QImage(layerSize, QImage::Format_RGB32), true);
-    //model->addItem(QString(), QImage("images\\sample.jpg"), true);
+    model->addItem();
     model->refreshModel();
     this->resizeRowsToContents();
 }
@@ -61,24 +61,26 @@ void LayerTableView::itemClicked(const QModelIndex& index)
 {
     if (index.isValid() )
     {
-        //When click in column 0.
-        if (index.column() == 0)
+        //When click in column 0, 1.
+        if (index.column() == 0 || index.column() ==1)
         {
-            model->changeLayerVisibility(index);
+            if (index.column()==0) model->changeLayerVisibility(index);
+            else model->changeLayerVisionType(index);
             QModelIndex tmp = model->selecttedIndex(model->getSelecttedRow());
             this->selectionModel()->select(tmp, QItemSelectionModel::Select);
         }
-        //When click in column 1.
-        else if (index.column() == 1)
+        //When click in column 2.
+        else if (index.column() == 2)
         {
             model->setSelecttedRow(index.row());
+            emit currentLayerChanged(index.row());
         }
     }
 }
 
-void LayerTableView::deleteLayer()
+void LayerTableView::deleteLayer(int layer_id)
 {
-    //model->deleteItem(model->getSelecttedRow());
+    model->deleteItem(model->getSelecttedRow());
     model->refreshModel();
 
     QModelIndex tmp = model->selecttedIndex(0);
@@ -88,4 +90,7 @@ void LayerTableView::deleteLayer()
 void LayerTableView::setLayerSize(QSize s)
 {
     layerSize = s;
+}
+void LayerTableView::modelDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles){
+    emit tableDataChanged();
 }

@@ -21,7 +21,7 @@ public:
 
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     void deleteItem(int index);
-    void addItem(Layer *new_layer);
+    void addItem();
     void refreshModel();
     QModelIndex selecttedIndex(int row);
 

@@ -14,15 +14,17 @@
 class LayerTableView : public QTableView
 {
     Q_OBJECT
-
+signals:
+    void tableDataChanged();
+    void currentLayerChanged(int index);
 public:
     LayerTableView(vector<Layer *> *layerlist,QWidget *parent = nullptr);
     ~LayerTableView();
     void setLayerSize(QSize s);
 
 public slots:
-    void addNewLayer();
-    void deleteLayer();
+    void addNewLayer(int);
+    void deleteLayer(int);
 
 protected:
     void mouseMoveEvent(QMouseEvent * event);
@@ -35,7 +37,7 @@ private:
 
 private slots:
     void itemClicked(const QModelIndex&);
-
+    void modelDataChanged(const QModelIndex&,const QModelIndex&,const QVector<int> &);
 };
 
 #endif // LAYERLISTVIEW_H

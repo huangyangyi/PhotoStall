@@ -28,8 +28,6 @@ public:
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-private:
-    QPixmap m_gridPixmap;
 };
 
 #endif // LAYERDELEGATE_H

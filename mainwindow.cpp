@@ -25,11 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->dock_geometry->raise();             //指定窗口置于最前
 
     ConnectFile();
-
     InitImage();        // 初始化图像QLabel
-
     InitLayerView();
     ConnectAction();    // Initialize the action connection
+    ConnectLayer();
 
     //皮肤！
     QFile styleSheet("./qss/main.qss");
@@ -56,7 +55,6 @@ void MainWindow::ConnectFile()
 void MainWindow::ConnectAction(){
     connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(SetActionDrag()));
     connect(imgLabel,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
-
     connect(ui->pushButton_line,SIGNAL(clicked()),this,SLOT(Lines()));
     connect(ui->pushButton_ciecle,SIGNAL(clicked()),this,SLOT(Circles()));
     connect(ui->pushButton_rectangle,SIGNAL(clicked()),this,SLOT(Rect()));
@@ -68,8 +66,14 @@ void MainWindow::ConnectAction(){
     connect(ui->anticlockwise_90,SIGNAL(clicked()),this,SLOT(AntiRotate90()));
     connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
     connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
+    connect(ui->pushButton_color,SIGNAL(clicked()),this,SLOT(CallColorDialog()));
 }
-
+void MainWindow::ConnectLayer(){
+    connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
+    connect(layer_group_,SIGNAL(removed(int)),layer_table_,SLOT(deleteLayer(int)));
+    connect(layer_table_,SIGNAL(tableDataChanged()),this,SLOT(RefreshView()));
+    connect(layer_table_,SIGNAL(currentLayerChanged(int)),this,SLOT(ChangeCurrentLayer(int)));
+}
 void MainWindow::SetActionDrag(){
     if (action_mode_!=DRAG_PREVIEW) action_mode_ = DRAG_PREVIEW;
     else action_mode_ = NO_ACTION;
@@ -84,6 +88,7 @@ void MainWindow::InitImage()
     scroll_area_->setBackgroundRole(QPalette::Dark);
     scroll_area_->setAlignment(Qt::AlignCenter);
     scroll_area_->setWidget(imgLabel);
+    scroll_area_->setMouseTracking(false);
     ui->dock_center->setWidget(scroll_area_);
 }
 
@@ -107,10 +112,11 @@ void MainWindow::OpenFile()
     {
         qDebug()<<path<<endl;
         Layer layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
-        if (layer_group_ == nullptr) {
-            layer_group_ = new LayerGroup(layer.get_height(),layer.get_width());
-        }
         layer_group_->insert(layer);
+        if (layer_group_->get_vec_id().size()==3) {
+            layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer.get_width()));
+            layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer.get_height()));
+        }
         current_layer_ = layer_group_->get_vec_layer()[1];
         qDebug()<<"Insert layer OK\n";
     }
@@ -128,7 +134,7 @@ void MainWindow::SaveFile()
             current_path_ = path;
     }
     //读取
-    QImage img = imgLabel->pixmap()->toImage();
+    QImage img = layer_group_->get_preview();
     img.save(current_path_);
 }
 //另存为
@@ -138,7 +144,7 @@ void MainWindow::SaveasFile()
     QString path = QFileDialog::getSaveFileName(this,"SaveAs", ".", "Images(*.jpg *.png *.bmp)");
     if (!path.isEmpty())
     {
-        QImage img = imgLabel->pixmap()->toImage();
+        QImage img = layer_group_->get_preview();
         img.save(path);
         current_path_ = path;
     }
@@ -152,7 +158,11 @@ void MainWindow::RefreshView()
         imgLabel->RefreshView();
     }
 }
-
+void MainWindow::ChangeCurrentLayer(int index){
+    vector<Layer *> *layerlist =&layer_group_->get_vec_layer();
+    if (!layerlist||index>=layerlist->size()) return;
+    current_layer_ = layerlist->at(index);
+}
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
     if (QApplication::keyboardModifiers()==Qt::ControlModifier){
@@ -165,7 +175,6 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
 {
     QPoint delta = endpoint - startpoint;
     Point s,e;
-    int mid,height,weight;
 
     s.x=startpoint.x();
     s.y=startpoint.y();
@@ -192,7 +201,6 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     }
     rect.height=abs(s.y-e.y);
     rect.width=abs(e.x-s.x);
-
 
     switch (action_mode_)
     {
@@ -315,8 +323,8 @@ void MainWindow::Blur()
 //直方图
 void MainWindow::Hist()
 {
-    DrawType.layerShowHist(*current_layer_);
-    RefreshView();
+    cv::namedWindow("Histogram");
+    cv::imshow("Histogram",DrawType.layerShowHist(*current_layer_));
 }
 
 //旋转
@@ -356,4 +364,12 @@ void MainWindow::Resize()
     double fy = str.toDouble();
     DrawType.layerResize(*current_layer_,fx/100,fy/100);
     RefreshView();
+}
+void MainWindow::CallColorDialog(){
+    QColorDialog *dlg = new QColorDialog(painter_color_);
+    connect(dlg,SIGNAL(colorSelected(QColor)),this,SLOT(SetPainterColor(QColor)));
+    dlg->exec();
+}
+void MainWindow::SetPainterColor(QColor new_color) {
+    painter_color_ = new_color;
 }

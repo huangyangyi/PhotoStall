@@ -12,6 +12,8 @@
 #include <QWheelEvent>
 #include<qscrollbar.h>
 #include<QPoint>
+#include<QColor>
+#include<QColorDialog>
 #include "layergroup.h"
 #include "imageqlabel.h"
 #include "layerbasic.h"
@@ -43,7 +45,7 @@ private:
     Ui::MainWindow *ui;
     LayerGroup *layer_group_=nullptr;//当前处理的图层组
     Layer *current_layer_=nullptr;//当前处理的图层
-
+    QColor painter_color_;
     LayerBasic DrawType;
     Rect rect;
     //打开文件
@@ -56,6 +58,8 @@ private:
     void InitLayerView();
     void ConnectFile();
     void ConnectAction();
+    void ConnectLayer();
+    void SetPainterColor(QColor);
     virtual void wheelEvent(QWheelEvent * event);
     virtual void keyPressEvent(QKeyEvent * event);
 private slots:
@@ -67,6 +71,7 @@ private slots:
     void Scroll(QPoint delta);
     void SetActionDrag();
     void DragSlot(QPoint startpoint,QPoint endpoint);
+    void ChangeCurrentLayer(int index);
 
     void Lines();
     void Circles();
@@ -79,6 +84,7 @@ private slots:
     void AntiRotate90();
     void Rotate();
     void Resize();
+    void CallColorDialog();
 };
 
 #endif // MAINWINDOW_H
