@@ -136,8 +136,8 @@ void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & c
 	}
 	else//erase
 	{
-		line(layer.M, pt1, pt2, Scalar(255, 255, 255), thickness, lineType, shift);
-		line(layer.valued, pt1, pt2, Scalar(0), thickness, lineType, shift);
+        line(layer.M, pt1, pt2, Scalar(255, 255, 255), -1, lineType, shift);
+        line(layer.valued, pt1, pt2, Scalar(0), -1, lineType, shift);
 	}
 }
 
@@ -151,8 +151,8 @@ void LayerBasic::layerCircle(Layer & layer, Point center, int radius, const Scal
 	}
 	else 
 	{
-		circle(layer.M, center, radius, Scalar(255, 255, 255), thickness, lineType, shift);
-		circle(layer.valued, center, radius, Scalar(0), thickness, lineType, shift);
+        circle(layer.M, center, radius, Scalar(255, 255, 255), -1, lineType, shift);
+        circle(layer.valued, center, radius, Scalar(0), -1, lineType, shift);
 	}
 }
 
@@ -166,8 +166,8 @@ void LayerBasic::layerRect(Layer & layer, Rect rect, const Scalar & color,
 	}
 	else
 	{
-		rectangle(layer.M, rect, Scalar(255, 255, 255), thickness, lineType, shift);
-		rectangle(layer.valued, rect, Scalar(0), thickness, lineType, shift);
+        rectangle(layer.M, rect, Scalar(255, 255, 255), -1, lineType, shift);
+        rectangle(layer.valued, rect, Scalar(0), -1, lineType, shift);
 	}
 }
 

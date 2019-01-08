@@ -60,7 +60,15 @@ void MainWindow::ConnectAction(){
     connect(ui->pushButton_line,SIGNAL(clicked()),this,SLOT(Lines()));
     connect(ui->pushButton_ciecle,SIGNAL(clicked()),this,SLOT(Circles()));
     connect(ui->pushButton_rectangle,SIGNAL(clicked()),this,SLOT(Rect()));
+    connect(ui->pushButton_cut,SIGNAL(clicked()),this,SLOT(Tailor()));
+    connect(ui->pushButton_mosaic,SIGNAL(clicked()),this,SLOT(Erase()));
+    connect(ui->confirm_filter_2,SIGNAL(clicked()),this,SLOT(Blur()));
+    connect(ui->pushButton_histogram,SIGNAL(clicked()),this,SLOT(Hist()));
+    connect(ui->clockwise_90,SIGNAL(clicked()),this,SLOT(Rotate90()));
+    connect(ui->anticlockwise_90,SIGNAL(clicked()),this,SLOT(AntiRotate90()));
+    connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
 }
+
 void MainWindow::SetActionDrag(){
     if (action_mode_!=DRAG_PREVIEW) action_mode_ = DRAG_PREVIEW;
     else action_mode_ = NO_ACTION;
@@ -149,6 +157,8 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
 {
     QPoint delta = endpoint - startpoint;
     Point s,e;
+    int mid,height,weight;
+
     s.x=startpoint.x();
     s.y=startpoint.y();
     e.x=endpoint.x();
@@ -156,8 +166,24 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     double zoom_level = imgLabel->GetZoomLevel();
     s/=zoom_level;
     e/=zoom_level;
-
-
+    if(s.x>e.x)
+    {
+        rect.x=e.x;
+    }
+    else
+    {
+        rect.x=s.x;
+    }
+    if(s.y<e.y)
+    {
+        rect.y=s.y;
+    }
+    else
+    {
+        rect.y=e.y;
+    }
+    rect.height=abs(s.y-e.y);
+    rect.width=abs(e.x-s.x);
 
 
     switch (action_mode_)
@@ -174,26 +200,23 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         RefreshView();
         break;
     case DRAW_RECT:
-        int mid,height,weight;
-        if(s.x>e.x)
-        {
-            mid=s.x;
-            s.x=e.x;
-            e.x=mid;
-        }
-        if(s.y<e.y)
-        {
-            mid=s.y;
-            s.y=e.y;
-            e.y=mid;
-        }
-        height=s.y-e.y;
-        weight=e.x-s.x;
-        rect.x=e.x;
-        rect.y=e.y;
-        rect.height=height;
-        rect.width=weight;
         DrawType.layerRect(*current_layer_, rect, Scalar(0,0,0));
+        RefreshView();
+        break;
+    case TAILOR:
+        DrawType.layerTailoring(*current_layer_, rect);
+        RefreshView();
+        break;
+    case ERASE:
+        DrawType.layerLine(*current_layer_,s,e,Scalar(255),0,20);
+        RefreshView();
+        break;
+    case ERASE_RECT:
+        DrawType.layerRect(*current_layer_,rect,Scalar(255),0);
+        RefreshView();
+        break;
+    case ERASE_CIRCLE:
+        DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)), Scalar(255),0);
         RefreshView();
         break;
     default:
@@ -224,12 +247,86 @@ void MainWindow::Lines()
 
 void MainWindow::Circles()
 {
-    if (action_mode_!=DRAW_CIRCLE) action_mode_ = DRAW_CIRCLE;
+    if(action_mode_==ERASE)
+    {
+        action_mode_ = ERASE_CIRCLE;
+        cout<<"erase_circle"<<endl;
+    }
+    else if (action_mode_!=DRAW_CIRCLE) action_mode_ = DRAW_CIRCLE;
     else action_mode_ = NO_ACTION;
 }
 
 void MainWindow::Rect()
-{
-    if (action_mode_!=DRAW_RECT) action_mode_ = DRAW_RECT;
+{   if(action_mode_==ERASE)
+    {
+        action_mode_ = ERASE_RECT;
+        cout<<"erase_rect"<<endl;
+    }
+    else if (action_mode_!=DRAW_RECT) action_mode_ = DRAW_RECT;
     else action_mode_ = NO_ACTION;
+}
+
+void MainWindow::Tailor()
+{
+    if (action_mode_!=TAILOR) action_mode_ = TAILOR;
+    else action_mode_ = NO_ACTION;
+}
+
+void MainWindow::Erase()
+{
+    if (action_mode_!=ERASE) action_mode_ = ERASE;
+    else action_mode_ = NO_ACTION;
+}
+
+void MainWindow::Blur()
+{   if(ui->comboBox__filter_2->currentIndex()==-1)
+    {
+        DrawType.layerBlur(*current_layer_);
+    }
+    else if(ui->comboBox__filter_2->currentIndex()==0)
+    {
+        DrawType.layerGaussBlur(*current_layer_);
+    }
+    else if(ui->comboBox__filter_2->currentIndex()==1)
+    {
+        DrawType.layerMedianBlur(*current_layer_);
+    }
+    else if(ui->comboBox__filter_2->currentIndex()==2)
+    {
+        DrawType.layerMedianBlur(*current_layer_);
+    }
+    RefreshView();
+}
+
+void MainWindow::Hist()
+{
+    DrawType.layerShowHist(*current_layer_);
+    RefreshView();
+}
+
+void MainWindow::Rotate90()
+{
+    DrawType.layerRotate(*current_layer_,-90);
+    RefreshView();
+}
+
+void MainWindow::AntiRotate90()
+{
+    DrawType.layerRotate(*current_layer_,90);
+    RefreshView();
+}
+
+void MainWindow::Rotate()
+{
+    QString str = ui->lineEdit_degree->text();
+    double num = str.toDouble();
+    if(ui->comboBox_direction->currentIndex()==-1)
+    {
+        DrawType.layerRotate(*current_layer_,num);
+    }
+    else if(ui->comboBox_direction->currentIndex()==0)
+    {
+        DrawType.layerRotate(*current_layer_,-num);
+    }
+    RefreshView();
 }

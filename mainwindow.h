@@ -31,7 +31,11 @@ private:
         DRAG_PREVIEW,//drag preview image
         DRAW_LINES,
         DRAW_CIRCLE,
-        DRAW_RECT
+        DRAW_RECT,
+        TAILOR,
+        ERASE,
+        ERASE_RECT,
+        ERASE_CIRCLE
     };
     QScrollArea *scroll_area_;
     ACTION_TYPE action_mode_;
@@ -64,6 +68,13 @@ private slots:
     void Lines();
     void Circles();
     void Rect();
+    void Tailor();
+    void Erase();
+    void Blur();
+    void Hist();
+    void Rotate90();
+    void AntiRotate90();
+    void Rotate();
 };
 
 #endif // MAINWINDOW_H
