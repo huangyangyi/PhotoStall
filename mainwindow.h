@@ -75,6 +75,7 @@ private slots:
     void Rotate90();
     void AntiRotate90();
     void Rotate();
+    void Resize();
 };
 
 #endif // MAINWINDOW_H

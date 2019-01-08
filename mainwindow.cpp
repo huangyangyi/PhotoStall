@@ -67,6 +67,7 @@ void MainWindow::ConnectAction(){
     connect(ui->clockwise_90,SIGNAL(clicked()),this,SLOT(Rotate90()));
     connect(ui->anticlockwise_90,SIGNAL(clicked()),this,SLOT(AntiRotate90()));
     connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
+    connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
 }
 
 void MainWindow::SetActionDrag(){
@@ -239,12 +240,14 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     }
 }
 
+//直线
 void MainWindow::Lines()
 {
     if (action_mode_!=DRAW_LINES) action_mode_ = DRAW_LINES;
     else action_mode_ = NO_ACTION;
 }
 
+//圆
 void MainWindow::Circles()
 {
     if(action_mode_==ERASE)
@@ -256,6 +259,7 @@ void MainWindow::Circles()
     else action_mode_ = NO_ACTION;
 }
 
+//方形
 void MainWindow::Rect()
 {   if(action_mode_==ERASE)
     {
@@ -266,18 +270,21 @@ void MainWindow::Rect()
     else action_mode_ = NO_ACTION;
 }
 
+//裁剪
 void MainWindow::Tailor()
 {
     if (action_mode_!=TAILOR) action_mode_ = TAILOR;
     else action_mode_ = NO_ACTION;
 }
 
+//橡皮
 void MainWindow::Erase()
 {
     if (action_mode_!=ERASE) action_mode_ = ERASE;
     else action_mode_ = NO_ACTION;
 }
 
+//滤波
 void MainWindow::Blur()
 {   if(ui->comboBox__filter_2->currentIndex()==-1)
     {
@@ -298,12 +305,14 @@ void MainWindow::Blur()
     RefreshView();
 }
 
+//直方图
 void MainWindow::Hist()
 {
     DrawType.layerShowHist(*current_layer_);
     RefreshView();
 }
 
+//旋转
 void MainWindow::Rotate90()
 {
     DrawType.layerRotate(*current_layer_,-90);
@@ -328,5 +337,15 @@ void MainWindow::Rotate()
     {
         DrawType.layerRotate(*current_layer_,-num);
     }
+    RefreshView();
+}
+
+void MainWindow::Resize()
+{
+    QString str = ui->lineEdit_length->text();
+    double fx = str.toDouble();
+    str = ui->lineEdit_width->text();
+    double fy = str.toDouble();
+    DrawType.layerResize(*current_layer_,fx/100,fy/100);
     RefreshView();
 }
