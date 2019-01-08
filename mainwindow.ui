@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu21">
@@ -145,7 +145,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/choose.png);</string>
+      <string notr="true">image: url(:/move.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -155,7 +155,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>70</y>
+       <y>130</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -174,7 +174,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>130</y>
+       <y>190</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -193,7 +193,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>190</y>
+       <y>250</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -212,7 +212,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>250</y>
+       <y>310</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -231,7 +231,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>370</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -250,7 +250,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>370</y>
+       <y>430</y>
        <width>51</width>
        <height>41</height>
       </rect>
@@ -263,6 +263,25 @@
      </property>
      <property name="text">
       <string>颜色</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_translation">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>51</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/保存.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/translation.png);</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
