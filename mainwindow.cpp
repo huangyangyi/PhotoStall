@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     InitImage();        // 初始化图像QLabel
 
-
+    InitLayerView();
     ConnectAction();    // Initialize the action connection
 
     //皮肤！
@@ -86,6 +86,12 @@ void MainWindow::InitImage()
     scroll_area_->setWidget(imgLabel);
     ui->dock_center->setWidget(scroll_area_);
 }
+
+void MainWindow::InitLayerView(){
+    layer_group_ = new LayerGroup();
+    layer_table_ = new LayerTableView(&layer_group_->get_vec_layer());
+    ui->dock_layer->setWidget(layer_table_);
+}
 //新建
 void MainWindow::NewFile()
 {
@@ -109,6 +115,7 @@ void MainWindow::OpenFile()
         qDebug()<<"Insert layer OK\n";
     }
     MainWindow::RefreshView();
+
 }
 //保存
 void MainWindow::SaveFile()

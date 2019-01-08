@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>add.png</file>
-        <file>choose.png</file>
         <file>close.png</file>
         <file>cut.png</file>
         <file>ellipse.png</file>
@@ -17,5 +16,7 @@
         <file>setting.png</file>
         <file>text.png</file>
         <file>combobox.png</file>
+        <file>move.png</file>
+        <file>translation.png</file>
     </qresource>
 </RCC>

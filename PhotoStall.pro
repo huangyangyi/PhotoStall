@@ -3,7 +3,7 @@
 # Project created by QtCreator 2018-12-12T19:59:07
 #
 #-------------------------------------------------
-
+RC_ICONS = PhotoStall.ico
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -30,14 +30,20 @@ SOURCES += \
     layer.cpp \
     layergroup.cpp \
     layerbasic.cpp \
-    imageqlabel.cpp
+    imageqlabel.cpp \
+    layertablemodel.cpp \
+    layerdelegate.cpp \
+    layertableview.cpp
 
 HEADERS += \
         mainwindow.h \
     layer.h \
     layergroup.h \
     layerbasic.h \
-    imageqlabel.h
+    imageqlabel.h \
+    layertablemodel.h \
+    layerdelegate.h \
+    layertableview.h
 
 FORMS += \
         mainwindow.ui
