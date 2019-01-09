@@ -39,7 +39,8 @@ private:
         ERASE,
         ERASE_RECT,
         ERASE_CIRCLE,
-        TRANSLATION
+        TRANSLATION,
+        PAINTER
     };
     QScrollArea *scroll_area_;
     ACTION_TYPE action_mode_;
@@ -72,6 +73,7 @@ private slots:
     void Scroll(QPoint delta);
     void SetActionDrag();
     void DragSlot(QPoint startpoint,QPoint endpoint);
+    void MoveSlot(QPoint startpoint,QPoint endpoint);
     void ChangeCurrentLayer(int index);
     void SetPainterColor(QColor);
     void Lines();
@@ -93,6 +95,7 @@ private slots:
     void TrunH();
     void TrunV();
     void Filter();
+    void UsePainter();
 };
 
 #endif // MAINWINDOW_H

@@ -67,7 +67,7 @@ void MainWindow::ConnectAction(){
     connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
     connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
     connect(ui->pushButton_color,SIGNAL(clicked()),this,SLOT(CallColorDialog()));
-    connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(Translation()));
+    connect(ui->pushButton_translation,SIGNAL(clicked()),this,SLOT(Translation()));
     connect(ui->pushButton_turn_h,SIGNAL(clicked()),this,SLOT(TrunH()));
     connect(ui->pushButton_turn_v,SIGNAL(clicked()),this,SLOT(TrunV()));
     connect(ui->confirm_filter,SIGNAL(clicked()),this,SLOT(Filter()));
@@ -216,6 +216,10 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     double zoom_level = imgLabel->GetZoomLevel();
     s/=zoom_level;
     e/=zoom_level;
+    s.x-=current_layer_->get_minCol();
+    e.x-=current_layer_->get_minCol();
+    s.y-=current_layer_->get_minRow();
+    e.y-=current_layer_->get_minRow();
     if(s.x>e.x)
     {
         rect.x=e.x;
@@ -310,6 +314,33 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         RefreshView();
         break;
     default:
+        RefreshView();
+        break;
+    }
+}
+void MainWindow::MoveSlot(QPoint startpoint,QPoint endpoint){
+    QPoint delta = endpoint - startpoint;
+    int pen_size = ui->combox_pensize->currentIndex();
+    Point s,e;
+    s.x=startpoint.x();
+    s.y=startpoint.y();
+    e.x=endpoint.x();
+    e.y=endpoint.y();
+    double zoom_level = imgLabel->GetZoomLevel();
+    s/=zoom_level;
+    e/=zoom_level;
+    s.x-=current_layer_->get_minCol();
+    e.x-=current_layer_->get_minCol();
+    s.y-=current_layer_->get_minRow();
+    e.y-=current_layer_->get_minRow();
+    switch (action_mode_) {
+    case PAINTER:
+        DrawType.layerCircle(*current_layer_,s,pen_size,painter_color_,1,-1);
+        break;
+    case ERASE:
+        DrawType.layerCircle(*current_layer_,s,pen_size,Scalar(255),0,-1);
+        break;
+    default:
         break;
     }
 }
@@ -374,6 +405,13 @@ void MainWindow::Tailor()
 void MainWindow::Erase()
 {
     if (action_mode_!=ERASE) action_mode_ = ERASE;
+    else action_mode_ = NO_ACTION;
+}
+
+//橡皮
+void MainWindow::UsePainter()
+{
+    if (action_mode_!=PAINTER) action_mode_ = PAINTER;
     else action_mode_ = NO_ACTION;
 }
 
