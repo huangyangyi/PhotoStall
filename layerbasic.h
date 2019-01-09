@@ -25,6 +25,9 @@ public:
     void layerTranslation(Layer& layer,int x,int y);
     // 平移
 	// x,y是在x轴y轴平移的距离，向右向上为正
+    void layerFlip(Layer& layer,int flipcode);
+    // 翻转
+    // flipcode=0竖直翻转，flipcode=1水平翻转
 
     // Histogram
     Mat layerCalHist(Layer& layer);
@@ -61,7 +64,20 @@ public:
 	// linetype 是线条种类，默认参数是8
 	// shift默认为0
 
-	// 滤镜
+    // 滤镜
+    void layerNostalgic(Layer &layer);
+    // 怀旧滤镜
+    void layerBlackWhite(Layer &layer);
+    // 黑白滤镜
+    void layerZoomBlur(Layer &layer,int num=40);
+    // 径向模糊滤镜
+    // num是模糊程度，num越大越模糊
+    void layerDiffusion(Layer &layer);
+    // 扩散滤镜(毛玻璃效果)
+    void layerEclosion(Layer &layer,float mSize = 0.5);
+    // mSize∈[0,1]是羽化参数
+    // 羽化
+
 };
 
 #endif // LAYERBASIC_H
