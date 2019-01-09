@@ -46,7 +46,7 @@ private:
     Ui::MainWindow *ui;
     LayerGroup *layer_group_=nullptr;//当前处理的图层组
     Layer *current_layer_=nullptr;//当前处理的图层
-    QColor painter_color_;
+    Scalar painter_color_;
     LayerBasic DrawType;
     Rect rect;
     //打开文件
@@ -60,7 +60,6 @@ private:
     void ConnectFile();
     void ConnectAction();
     void ConnectLayer();
-    void SetPainterColor(QColor);
     virtual void wheelEvent(QWheelEvent * event);
     virtual void keyPressEvent(QKeyEvent * event);
 private slots:
@@ -73,7 +72,7 @@ private slots:
     void SetActionDrag();
     void DragSlot(QPoint startpoint,QPoint endpoint);
     void ChangeCurrentLayer(int index);
-
+    void SetPainterColor(QColor);
     void Lines();
     void Circles();
     void Rect();

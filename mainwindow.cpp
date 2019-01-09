@@ -211,8 +211,7 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     case DRAW_LINES:
         if(ui->comboBox_mode->currentIndex()==0)
         {
-            cout<<painter_color_.red()<<" "<<painter_color_.green()<<" "<<painter_color_.blue()<<endl;
-            DrawType.layerLine(*current_layer_,s,e,Scalar(painter_color_.red(),painter_color_.green(),painter_color_.blue()),1,ui->combox_pensize->currentIndex()+1);
+            DrawType.layerLine(*current_layer_,s,e,painter_color_,1,ui->combox_pensize->currentIndex()+1);
         }
         else if(ui->comboBox_mode->currentIndex()==1)
         {
@@ -225,11 +224,11 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         {
             if(ui->comboBox_solid->currentIndex()==0)
             {
-                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_.rgb(),1,ui->combox_pensize->currentIndex()+1);
+                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_,1,ui->combox_pensize->currentIndex()+1);
             }
             else if(ui->comboBox_solid->currentIndex()==1)
             {
-                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_.rgb(),0);
+                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_,1,-1);
             }
 
         }
@@ -244,11 +243,11 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         {
             if(ui->comboBox_solid->currentIndex()==0)
             {
-                DrawType.layerRect(*current_layer_, rect, painter_color_.rgb(), 1, ui->combox_pensize->currentIndex()+1);
+                DrawType.layerRect(*current_layer_, rect, painter_color_, 1, ui->combox_pensize->currentIndex()+1);
             }
             else if(ui->comboBox_solid->currentIndex()==1)
             {
-                DrawType.layerRect(*current_layer_,rect,painter_color_.rgb(), 0);
+                DrawType.layerRect(*current_layer_,rect,painter_color_, 1,-1);
             }
         }
         else if(ui->comboBox_mode->currentIndex()==1)
@@ -415,12 +414,11 @@ void MainWindow::Resize()
 }
 
 void MainWindow::CallColorDialog(){
-    QColorDialog *dlg = new QColorDialog(painter_color_);
+    QColorDialog *dlg = new QColorDialog(QColor(painter_color_[0],painter_color_[1],painter_color_[2]));
     connect(dlg,SIGNAL(colorSelected(QColor)),this,SLOT(SetPainterColor(QColor)));
     dlg->exec();
 }
 
 void MainWindow::SetPainterColor(QColor new_color) {
-    painter_color_ = new_color;
-    cout<<painter_color_.red()<<" "<<painter_color_.green()<<" "<<painter_color_.blue()<<endl;
+    painter_color_ = Scalar(new_color.red(),new_color.green(),new_color.blue());
 }
