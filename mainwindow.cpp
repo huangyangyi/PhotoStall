@@ -392,7 +392,7 @@ void MainWindow::Rotate()
 {
     QString str = ui->lineEdit_degree->text();
     double num = str.toDouble();
-    if(ui->comboBox_direction->currentIndex()==-1)
+    if(ui->comboBox_direction->currentIndex()==1)
     {
         DrawType.layerRotate(*current_layer_,num);
     }
