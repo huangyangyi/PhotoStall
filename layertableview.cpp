@@ -1,7 +1,7 @@
 #include "layertableview.h"
 
 LayerTableView::LayerTableView(vector<Layer *> *layerlist,QWidget *parent)
-: QTableView(parent)
+    : QTableView(parent)
 {
     delegate = new LayerDelegate();
     model = new LayerTableModel(layerlist);
@@ -44,9 +44,21 @@ void LayerTableView::contextMenuEvent(QContextMenuEvent * event)
 {
 
     QMenu *pMenu = new QMenu(this);
-    QAction *pAddGroupAct = new QAction(tr("Delete"), pMenu);
-    pMenu->addAction(pAddGroupAct);
-    pMenu->popup(mapToGlobal(event->pos()));
+    int row_index = event->pos().y()/rowHeight(0);
+    if (row_index>=model->rowCount())
+    {
+        pMenu->addAction(tr("新增图层"),this,SLOT(createLayer()));
+        pMenu->popup(mapToGlobal(event->pos()));
+    }
+    else
+    {
+        model->setSelecttedRow(row_index);
+        emit currentLayerChanged(row_index);
+        pMenu->addAction(tr("删除图层"),this,SLOT(deleteLayer()));
+        pMenu->addAction(tr("上移图层"),this,SLOT(layerUp()));
+        pMenu->addAction(tr("下移图层"),this,SLOT(layerDown()));
+        pMenu->popup(mapToGlobal(event->pos()));
+    }
 
 }
 
@@ -78,19 +90,38 @@ void LayerTableView::itemClicked(const QModelIndex& index)
     }
 }
 
-void LayerTableView::deleteLayer(int layer_id)
+void LayerTableView::deleteLayer()
 {
-    //model->deleteItem(model->getSelecttedRow());
+    emit tableDeleteLayer(model->getSelecttedRow());
     model->refreshModel();
-
+    this->resizeRowsToContents();
     QModelIndex tmp = model->selecttedIndex(0);
     this->selectionModel()->select(tmp, QItemSelectionModel::Select);
 }
-
-void LayerTableView::setLayerSize(QSize s)
+void LayerTableView::layerDown()
 {
-    layerSize = s;
+    int row_index = model->getSelecttedRow();
+    if(row_index == 0) return ;
+    emit tableLayerResorted(row_index,row_index-1);
+    model->setSelecttedRow(model->getSelecttedRow()-1);
+    model->refreshModel();
 }
+void LayerTableView::layerUp()
+{
+    int row_index = model->getSelecttedRow();
+    if(row_index+1 >= model->rowCount()) return ;
+    emit tableLayerResorted(row_index,row_index+1);
+    model->setSelecttedRow(model->getSelecttedRow()+1);
+    model->refreshModel();
+}
+void LayerTableView::createLayer()
+{
+    emit tableLayerCreated();
+}
+
 void LayerTableView::modelDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles){
     emit tableDataChanged();
+}
+void LayerTableView::RefreshTable(){
+    model->refreshModel();
 }

@@ -60,6 +60,7 @@ private:
     void ConnectFile();
     void ConnectAction();
     void ConnectLayer();
+    void DisconnectLayer();
     virtual void wheelEvent(QWheelEvent * event);
     virtual void keyPressEvent(QKeyEvent * event);
 private slots:
@@ -86,6 +87,9 @@ private slots:
     void Resize();
     void CallColorDialog();
     void Translation();
+    void RemoveLayer(int);
+    void ResortLayer(int,int);
+    void CreateLayer();
 };
 
 #endif // MAINWINDOW_H

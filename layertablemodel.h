@@ -10,6 +10,7 @@ class LayerTableModel : public QAbstractTableModel
     Q_OBJECT
 public:
     int rowCount(const QModelIndex &parent) const;
+    int rowCount() const;
     int columnCount(const QModelIndex &parent) const;
     LayerTableModel(vector<Layer*> *layerlist = nullptr);
     ~LayerTableModel();

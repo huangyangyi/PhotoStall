@@ -113,13 +113,15 @@ int LayerTableModel::rowCount(const QModelIndex &parent) const
 {
     return (parent.isValid() && parent.column() != 0) ? 0 : layerlist->size();
 }
+int LayerTableModel::rowCount() const
+{
+    return layerlist->size();
+}
 
 int LayerTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 3;
 }
-void LayerTableModel::deleteItem(int index){
-
-}
+void LayerTableModel::deleteItem(int index){}
 void LayerTableModel::addItem(){}

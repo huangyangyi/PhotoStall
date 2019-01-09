@@ -74,6 +74,13 @@ void MainWindow::ConnectLayer(){
     connect(layer_group_,SIGNAL(removed(int)),layer_table_,SLOT(deleteLayer(int)));
     connect(layer_table_,SIGNAL(tableDataChanged()),this,SLOT(RefreshView()));
     connect(layer_table_,SIGNAL(currentLayerChanged(int)),this,SLOT(ChangeCurrentLayer(int)));
+    connect(layer_table_,SIGNAL(tableDeleteLayer(int)),this,SLOT(RemoveLayer(int)),Qt::UniqueConnection);
+    connect(layer_table_,SIGNAL(tableLayerResorted(int,int)),this,SLOT(ResortLayer(int,int)));
+    connect(layer_table_,SIGNAL(tableLayerCreated()),this,SLOT(CreateLayer()));
+}
+void MainWindow::DisconnectLayer(){
+    disconnect(layer_group_);
+    disconnect(layer_table_);
 }
 void MainWindow::SetActionDrag(){
     if (action_mode_!=DRAG_PREVIEW) action_mode_ = DRAG_PREVIEW;
@@ -101,9 +108,15 @@ void MainWindow::InitLayerView(){
 //新建
 void MainWindow::NewFile()
 {
+    DisconnectLayer();
     if (layer_group_!=nullptr) delete layer_group_;
     layer_group_ = new LayerGroup;
+    layer_table_->setModel(new LayerTableModel(&layer_group_->get_vec_layer()));
+    layer_table_->resizeRowsToContents();
+    InitLayerView();
+    ConnectLayer();
     MainWindow::RefreshView();
+
 }
 //打开
 void MainWindow::OpenFile()
@@ -119,10 +132,8 @@ void MainWindow::OpenFile()
             layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer.get_height()));
         }
         current_layer_ = layer_group_->get_vec_layer()[1];
-        qDebug()<<"Insert layer OK\n";
     }
     MainWindow::RefreshView();
-
 }
 //保存
 void MainWindow::SaveFile()
@@ -163,6 +174,24 @@ void MainWindow::ChangeCurrentLayer(int index){
     vector<Layer *> *layerlist =&layer_group_->get_vec_layer();
     if (!layerlist||index>=layerlist->size()) return;
     current_layer_ = layerlist->at(index);
+}
+void MainWindow::RemoveLayer(int index){
+    layer_group_->remove(layer_group_->get_vec_id().at(index));
+    RefreshView();
+}
+void MainWindow::ResortLayer(int index1,int index2){
+    vector<int> vec_id=layer_group_->get_vec_id();
+    swap(vec_id[index1],vec_id[index2]);
+    layer_group_->reorder(vec_id);
+    layer_table_->RefreshTable();
+    RefreshView();
+}
+void MainWindow::CreateLayer() {
+    Layer *new_layer = new Layer();
+    new_layer->create("Untitled Layer",TRANSPARENT,layer_group_->get_maxWidth(),layer_group_->get_maxHeight());
+    layer_group_->insert(*new_layer);
+    layer_table_->RefreshTable();
+    RefreshView();
 }
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
@@ -254,6 +283,7 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         {
             DrawType.layerRect(*current_layer_,rect,Scalar(255),0);
         }
+
         RefreshView();
         break;
     case TAILOR:
@@ -315,7 +345,6 @@ void MainWindow::Circles()
     if(action_mode_==ERASE)
     {
         action_mode_ = ERASE_CIRCLE;
-        cout<<"erase_circle"<<endl;
     }
     else if (action_mode_!=DRAW_CIRCLE) action_mode_ = DRAW_CIRCLE;
     else action_mode_ = NO_ACTION;
@@ -326,7 +355,6 @@ void MainWindow::Rect()
 {   if(action_mode_==ERASE)
     {
         action_mode_ = ERASE_RECT;
-        cout<<"erase_rect"<<endl;
     }
     else if (action_mode_!=DRAW_RECT) action_mode_ = DRAW_RECT;
     else action_mode_ = NO_ACTION;
