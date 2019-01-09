@@ -351,19 +351,19 @@ void MainWindow::Erase()
 
 //滤波
 void MainWindow::Blur()
-{   if(ui->comboBox__filter_2->currentIndex()==-1)
+{   if(ui->comboBox__filter_2->currentIndex()==0)
     {
         DrawType.layerBlur(*current_layer_);
     }
-    else if(ui->comboBox__filter_2->currentIndex()==0)
+    else if(ui->comboBox__filter_2->currentIndex()==1)
     {
         DrawType.layerGaussBlur(*current_layer_);
     }
-    else if(ui->comboBox__filter_2->currentIndex()==1)
+    else if(ui->comboBox__filter_2->currentIndex()==2)
     {
         DrawType.layerMedianBlur(*current_layer_);
     }
-    else if(ui->comboBox__filter_2->currentIndex()==2)
+    else if(ui->comboBox__filter_2->currentIndex()==3)
     {
         DrawType.layerMedianBlur(*current_layer_);
     }
