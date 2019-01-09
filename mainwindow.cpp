@@ -68,6 +68,9 @@ void MainWindow::ConnectAction(){
     connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
     connect(ui->pushButton_color,SIGNAL(clicked()),this,SLOT(CallColorDialog()));
     connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(Translation()));
+    connect(ui->pushButton_turn_h,SIGNAL(clicked()),this,SLOT(TrunH()));
+    connect(ui->pushButton_turn_v,SIGNAL(clicked()),this,SLOT(TrunV()));
+    connect(ui->confirm_filter,SIGNAL(clicked()),this,SLOT(Filter()));
 }
 void MainWindow::ConnectLayer(){
     connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
@@ -449,4 +452,31 @@ void MainWindow::CallColorDialog(){
 
 void MainWindow::SetPainterColor(QColor new_color) {
     painter_color_ = Scalar(new_color.red(),new_color.green(),new_color.blue());
+}
+
+//水平翻转
+void MainWindow::TrunH()
+{
+    DrawType.layerFlip(*current_layer_,1);
+    RefreshView();
+}
+
+//竖直翻转
+void MainWindow::TrunV()
+{
+    DrawType.layerFlip(*current_layer_,0);
+    RefreshView();
+}
+
+void MainWindow::Filter()
+{
+    if(ui->comboBox__filter->currentIndex()==1)
+    {
+        DrawType.layerNostalgic(*current_layer_);
+    }
+    else if(ui->comboBox__filter->currentIndex()==2)
+    {
+        DrawType.layerBlackWhite(*current_layer_);
+    }
+    RefreshView();
 }

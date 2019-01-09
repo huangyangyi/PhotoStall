@@ -90,6 +90,9 @@ private slots:
     void RemoveLayer(int);
     void ResortLayer(int,int);
     void CreateLayer();
+    void TrunH();
+    void TrunV();
+    void Filter();
 };
 
 #endif // MAINWINDOW_H
