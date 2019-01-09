@@ -18,5 +18,8 @@
         <file>combobox.png</file>
         <file>move.png</file>
         <file>translation.png</file>
+        <file>eraser.png</file>
+        <file>pen.png</file>
+        <file>color.png</file>
     </qresource>
 </RCC>

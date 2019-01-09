@@ -59,7 +59,7 @@ void MainWindow::ConnectAction(){
     connect(ui->pushButton_ciecle,SIGNAL(clicked()),this,SLOT(Circles()));
     connect(ui->pushButton_rectangle,SIGNAL(clicked()),this,SLOT(Rect()));
     connect(ui->pushButton_cut,SIGNAL(clicked()),this,SLOT(Tailor()));
-    connect(ui->pushButton_mosaic,SIGNAL(clicked()),this,SLOT(Erase()));
+    connect(ui->pushButton_eraser,SIGNAL(clicked()),this,SLOT(Erase()));
     connect(ui->confirm_filter_2,SIGNAL(clicked()),this,SLOT(Blur()));
     connect(ui->pushButton_histogram,SIGNAL(clicked()),this,SLOT(Hist()));
     connect(ui->clockwise_90,SIGNAL(clicked()),this,SLOT(Rotate90()));
