@@ -442,13 +442,28 @@ void MainWindow::TrunV()
 
 void MainWindow::Filter()
 {
-    if(ui->comboBox__filter->currentIndex()==1)
+    if(ui->comboBox__filter->currentIndex()==5)
+    {
+        DrawType.layerBlackWhite(*current_layer_);
+    }
+    else if(ui->comboBox__filter->currentIndex()==4)
     {
         DrawType.layerNostalgic(*current_layer_);
     }
+    else if(ui->comboBox__filter->currentIndex()==3)
+    {
+        ui->horizontalSlider_filter->setMinimum(0);
+        ui->horizontalSlider_filter->setMaximum(100);
+        ui->horizontalSlider_filter->setSingleStep(10);
+        DrawType.layerEclosion(*current_layer_,(float)ui->horizontalSlider_filter->value()/100);
+    }
     else if(ui->comboBox__filter->currentIndex()==2)
     {
-        DrawType.layerBlackWhite(*current_layer_);
+        DrawType.layerDiffusion(*current_layer_);
+    }
+    else if(ui->comboBox__filter->currentIndex()==1)
+    {
+        DrawType.layerZoomBlur(*current_layer_,ui->horizontalSlider_filter->value());
     }
     RefreshView();
 }
