@@ -383,7 +383,7 @@
       <string>模式</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboBox_mode">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -421,7 +421,7 @@
       <string>画笔</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="comboBox_solid">
      <property name="geometry">
       <rect>
        <x>10</x>
