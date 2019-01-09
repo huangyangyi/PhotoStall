@@ -124,8 +124,8 @@ void LayerBasic::layerLine(Layer & layer, Point pt1, Point pt2, const Scalar & c
 	}
 	else//erase
 	{
-        line(layer.M, pt1, pt2, Scalar(255, 255, 255), -1, lineType, shift);
-        line(layer.valued, pt1, pt2, Scalar(0), -1, lineType, shift);
+        line(layer.M, pt1, pt2, Scalar(255, 255, 255), thickness, lineType, shift);
+        line(layer.valued, pt1, pt2, Scalar(0), thickness, lineType, shift);
 	}
 }
 

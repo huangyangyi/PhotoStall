@@ -38,7 +38,8 @@ private:
         TAILOR,
         ERASE,
         ERASE_RECT,
-        ERASE_CIRCLE
+        ERASE_CIRCLE,
+        TRANSLATION
     };
     QScrollArea *scroll_area_;
     ACTION_TYPE action_mode_;
@@ -85,6 +86,7 @@ private slots:
     void Rotate();
     void Resize();
     void CallColorDialog();
+    void Translation();
 };
 
 #endif // MAINWINDOW_H

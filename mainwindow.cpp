@@ -67,6 +67,7 @@ void MainWindow::ConnectAction(){
     connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
     connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
     connect(ui->pushButton_color,SIGNAL(clicked()),this,SLOT(CallColorDialog()));
+    connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(Translation()));
 }
 void MainWindow::ConnectLayer(){
     connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
@@ -208,15 +209,52 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         Scroll(delta);
         break;
     case DRAW_LINES:
-        DrawType.layerLine(*current_layer_,s,e,Scalar(0,0,0));
+        if(ui->comboBox_mode->currentIndex()==0)
+        {
+            cout<<painter_color_.red()<<" "<<painter_color_.green()<<" "<<painter_color_.blue()<<endl;
+            DrawType.layerLine(*current_layer_,s,e,Scalar(painter_color_.red(),painter_color_.green(),painter_color_.blue()),1,ui->combox_pensize->currentIndex()+1);
+        }
+        else if(ui->comboBox_mode->currentIndex()==1)
+        {
+            DrawType.layerLine(*current_layer_,s,e,Scalar(255),0,ui->combox_pensize->currentIndex()+1);
+        }
         RefreshView();
         break;
     case DRAW_CIRCLE:
-        DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)), Scalar(0,0,0));
+        if(ui->comboBox_mode->currentIndex()==0)
+        {
+            if(ui->comboBox_solid->currentIndex()==0)
+            {
+                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_.rgb(),1,ui->combox_pensize->currentIndex()+1);
+            }
+            else if(ui->comboBox_solid->currentIndex()==1)
+            {
+                DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)),painter_color_.rgb(),0);
+            }
+
+        }
+        else if(ui->comboBox_mode->currentIndex()==1)
+        {
+            DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)), Scalar(255),0);
+        }
         RefreshView();
         break;
     case DRAW_RECT:
-        DrawType.layerRect(*current_layer_, rect, Scalar(0,0,0));
+        if(ui->comboBox_mode->currentIndex()==0)
+        {
+            if(ui->comboBox_solid->currentIndex()==0)
+            {
+                DrawType.layerRect(*current_layer_, rect, painter_color_.rgb(), 1, ui->combox_pensize->currentIndex()+1);
+            }
+            else if(ui->comboBox_solid->currentIndex()==1)
+            {
+                DrawType.layerRect(*current_layer_,rect,painter_color_.rgb(), 0);
+            }
+        }
+        else if(ui->comboBox_mode->currentIndex()==1)
+        {
+            DrawType.layerRect(*current_layer_,rect,Scalar(255),0);
+        }
         RefreshView();
         break;
     case TAILOR:
@@ -233,6 +271,10 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         break;
     case ERASE_CIRCLE:
         DrawType.layerCircle(*current_layer_,s,(int)sqrt((s.x-e.x)*(s.x-e.x)+(s.y-e.y)*(s.y-e.y)), Scalar(255),0);
+        RefreshView();
+        break;
+    case TRANSLATION:
+        DrawType.layerTranslation(*current_layer_,e.x-s.x,e.y-s.y);
         RefreshView();
         break;
     default:
@@ -253,6 +295,12 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
     if (event->key()==Qt::Key_0&&QApplication::keyboardModifiers()==Qt::ControlModifier){
         imgLabel->ResetZoom();
     }
+}
+
+void MainWindow::Translation()
+{
+    if(action_mode_!=TRANSLATION) action_mode_ = TRANSLATION;
+    else action_mode_ = NO_ACTION;
 }
 
 //直线
@@ -365,11 +413,14 @@ void MainWindow::Resize()
     DrawType.layerResize(*current_layer_,fx/100,fy/100);
     RefreshView();
 }
+
 void MainWindow::CallColorDialog(){
     QColorDialog *dlg = new QColorDialog(painter_color_);
     connect(dlg,SIGNAL(colorSelected(QColor)),this,SLOT(SetPainterColor(QColor)));
     dlg->exec();
 }
+
 void MainWindow::SetPainterColor(QColor new_color) {
     painter_color_ = new_color;
+    cout<<painter_color_.red()<<" "<<painter_color_.green()<<" "<<painter_color_.blue()<<endl;
 }
