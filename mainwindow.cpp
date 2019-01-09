@@ -76,7 +76,6 @@ void MainWindow::ConnectAction(){
 }
 void MainWindow::ConnectLayer(){
     connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
-    connect(layer_group_,SIGNAL(removed(int)),layer_table_,SLOT(deleteLayer(int)));
     connect(layer_table_,SIGNAL(tableDataChanged()),this,SLOT(RefreshView()));
     connect(layer_table_,SIGNAL(currentLayerChanged(int)),this,SLOT(ChangeCurrentLayer(int)));
     connect(layer_table_,SIGNAL(tableDeleteLayer(int)),this,SLOT(RemoveLayer(int)),Qt::UniqueConnection);
@@ -131,10 +130,10 @@ void MainWindow::OpenFile()
     {
         qDebug()<<path<<endl;
         Layer* layer= new Layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
-        layer_group_->insert(&layer);
+        layer_group_->insert(*layer);
         if (layer_group_->get_vec_id().size()==3) {
-            layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer.get_width()));
-            layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer.get_height()));
+            layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer->get_width()));
+            layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer->get_height()));
         }
         current_layer_ = layer_group_->get_vec_layer()[1];
     }

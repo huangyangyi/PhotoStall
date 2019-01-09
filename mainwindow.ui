@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>2120</height>
+    <width>10000</width>
+    <height>10000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,8 +42,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
-     <height>17</height>
+     <width>10000</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu21">
@@ -994,7 +994,7 @@
   </widget>
   <action name="action_open">
    <property name="icon">
-    <iconset resource="icon/icon.qrc">
+    <iconset>
      <normaloff>:/open.png</normaloff>:/open.png</iconset>
    </property>
    <property name="text">
@@ -1003,7 +1003,7 @@
   </action>
   <action name="action_new">
    <property name="icon">
-    <iconset resource="icon/icon.qrc">
+    <iconset>
      <normaloff>:/add.png</normaloff>:/add.png</iconset>
    </property>
    <property name="text">
@@ -1012,7 +1012,7 @@
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset resource="icon/icon.qrc">
+    <iconset>
      <normaloff>:/save.png</normaloff>:/save.png</iconset>
    </property>
    <property name="text">
@@ -1021,7 +1021,7 @@
   </action>
   <action name="action_saveas">
    <property name="icon">
-    <iconset resource="icon/icon.qrc">
+    <iconset>
      <normaloff>:/saveas.png</normaloff>:/saveas.png</iconset>
    </property>
    <property name="text">
@@ -1030,7 +1030,7 @@
   </action>
   <action name="action_exit">
    <property name="icon">
-    <iconset resource="icon/icon.qrc">
+    <iconset>
      <normaloff>:/close.png</normaloff>:/close.png</iconset>
    </property>
    <property name="text">
@@ -1063,8 +1063,6 @@
   <zorder>dock_paint</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="icon/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

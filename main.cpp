@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     qApp->setStyleSheet(qss.readAll());
 
     MainWindow w;
+    w.setWindowState(Qt::WindowMaximized);
     w.show();
     screen.finish(&w);
 
