@@ -100,6 +100,7 @@ bool LayerGroup::remove(int id)
     {
         if (vec_id[i] == id)
         {
+            layerNum--;
             vec_id.erase(it_id);
             vec_layer.erase(it_layer);
             break;

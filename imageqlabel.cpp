@@ -27,10 +27,16 @@ void ImageQLabel::RefreshView(){
 }
 void ImageQLabel::mousePressEvent(QMouseEvent *event){
     clicked_pos=QPoint(event->x(),event->y());
+    move_pos=clicked_pos;
 }
 void ImageQLabel::mouseReleaseEvent(QMouseEvent *event){
     QPoint endpoint=QPoint(event->x(),event->y());
     emit dragged(clicked_pos,endpoint);
+}
+void ImageQLabel::mouseMoveEvent(QMouseEvent *event){
+    QPoint endpoint=QPoint(event->x(),event->y());
+    emit moved(move_pos,endpoint);
+    move_pos = endpoint;
 }
 void ImageQLabel::ResetZoom(){
     zoom_level_=1.0;

@@ -55,6 +55,7 @@ void MainWindow::ConnectFile()
 void MainWindow::ConnectAction(){
     connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(SetActionDrag()));
     connect(imgLabel,SIGNAL(dragged(QPoint,QPoint)),this,SLOT(DragSlot(QPoint,QPoint)));
+    connect(imgLabel,SIGNAL(moved(QPoint,QPoint)),this,SLOT(MoveSlot(QPoint,QPoint)));
     connect(ui->pushButton_line,SIGNAL(clicked()),this,SLOT(Lines()));
     connect(ui->pushButton_ciecle,SIGNAL(clicked()),this,SLOT(Circles()));
     connect(ui->pushButton_rectangle,SIGNAL(clicked()),this,SLOT(Rect()));
@@ -67,10 +68,11 @@ void MainWindow::ConnectAction(){
     connect(ui->confirm_rotate,SIGNAL(clicked()),this,SLOT(Rotate()));
     connect(ui->confrim_size,SIGNAL(clicked()),this,SLOT(Resize()));
     connect(ui->pushButton_color,SIGNAL(clicked()),this,SLOT(CallColorDialog()));
-    connect(ui->pushButton_choose,SIGNAL(clicked()),this,SLOT(Translation()));
+    connect(ui->pushButton_translation,SIGNAL(clicked()),this,SLOT(Translation()));
     connect(ui->pushButton_turn_h,SIGNAL(clicked()),this,SLOT(TrunH()));
     connect(ui->pushButton_turn_v,SIGNAL(clicked()),this,SLOT(TrunV()));
     connect(ui->confirm_filter,SIGNAL(clicked()),this,SLOT(Filter()));
+    connect(ui->pushButton_pen,SIGNAL(clicked()),this,SLOT(UsePainter()));
 }
 void MainWindow::ConnectLayer(){
     connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
@@ -128,8 +130,8 @@ void MainWindow::OpenFile()
     if (!path.isEmpty())
     {
         qDebug()<<path<<endl;
-        Layer layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
-        layer_group_->insert(layer);
+        Layer* layer= new Layer(path.toStdString(),"Untitiled Layer",OPAQUE,true,0,0);
+        layer_group_->insert(&layer);
         if (layer_group_->get_vec_id().size()==3) {
             layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer.get_width()));
             layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer.get_height()));
@@ -216,6 +218,10 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     double zoom_level = imgLabel->GetZoomLevel();
     s/=zoom_level;
     e/=zoom_level;
+    s.x-=current_layer_->get_minCol();
+    e.x-=current_layer_->get_minCol();
+    s.y-=current_layer_->get_minRow();
+    e.y-=current_layer_->get_minRow();
     if(s.x>e.x)
     {
         rect.x=e.x;
@@ -293,10 +299,6 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
         DrawType.layerTailoring(*current_layer_, rect);
         RefreshView();
         break;
-    case ERASE:
-        DrawType.layerLine(*current_layer_,s,e,Scalar(255),0,20);
-        RefreshView();
-        break;
     case ERASE_RECT:
         DrawType.layerRect(*current_layer_,rect,Scalar(255),0);
         RefreshView();
@@ -308,6 +310,33 @@ void MainWindow::DragSlot(QPoint startpoint,QPoint endpoint)
     case TRANSLATION:
         DrawType.layerTranslation(*current_layer_,e.x-s.x,e.y-s.y);
         RefreshView();
+        break;
+    default:
+        RefreshView();
+        break;
+    }
+}
+void MainWindow::MoveSlot(QPoint startpoint,QPoint endpoint){
+    QPoint delta = endpoint - startpoint;
+    int pen_size = ui->combox_pensize->currentIndex()+1;
+    Point s,e;
+    s.x=startpoint.x();
+    s.y=startpoint.y();
+    e.x=endpoint.x();
+    e.y=endpoint.y();
+    double zoom_level = imgLabel->GetZoomLevel();
+    s/=zoom_level;
+    e/=zoom_level;
+    s.x-=current_layer_->get_minCol();
+    e.x-=current_layer_->get_minCol();
+    s.y-=current_layer_->get_minRow();
+    e.y-=current_layer_->get_minRow();
+    switch (action_mode_) {
+    case PAINTER:
+        DrawType.layerLine(*current_layer_,s,e,painter_color_,1,pen_size);
+        break;
+    case ERASE:
+        DrawType.layerLine(*current_layer_,s,e,Scalar(255),0,pen_size);
         break;
     default:
         break;
@@ -374,6 +403,13 @@ void MainWindow::Tailor()
 void MainWindow::Erase()
 {
     if (action_mode_!=ERASE) action_mode_ = ERASE;
+    else action_mode_ = NO_ACTION;
+}
+
+//橡皮
+void MainWindow::UsePainter()
+{
+    if (action_mode_!=PAINTER) action_mode_ = PAINTER;
     else action_mode_ = NO_ACTION;
 }
 
@@ -445,13 +481,13 @@ void MainWindow::Resize()
 }
 
 void MainWindow::CallColorDialog(){
-    QColorDialog *dlg = new QColorDialog(QColor(painter_color_[0],painter_color_[1],painter_color_[2]));
+    QColorDialog *dlg = new QColorDialog(QColor(painter_color_[2],painter_color_[1],painter_color_[0]));
     connect(dlg,SIGNAL(colorSelected(QColor)),this,SLOT(SetPainterColor(QColor)));
     dlg->exec();
 }
 
 void MainWindow::SetPainterColor(QColor new_color) {
-    painter_color_ = Scalar(new_color.red(),new_color.green(),new_color.blue());
+    painter_color_ = Scalar(new_color.blue(),new_color.green(),new_color.red());
 }
 
 //水平翻转

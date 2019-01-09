@@ -10,8 +10,10 @@ private:
     QPixmap preview_;
     qreal zoom_level_=1.0;
     QPoint clicked_pos;
+    QPoint move_pos;
 signals:
     void dragged(QPoint,QPoint);
+    void moved(QPoint,QPoint);
 public:
     ImageQLabel();
     ImageQLabel(QWidget *parent);
@@ -22,6 +24,7 @@ public:
     qreal GetZoomLevel()const;
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif // IMAGEQLABEL_H
