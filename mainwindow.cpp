@@ -472,11 +472,7 @@ void MainWindow::Rotate()
 //缩放
 void MainWindow::Resize()
 {
-    QString str = ui->lineEdit_length->text();
-    double fx = str.toDouble();
-    str = ui->lineEdit_width->text();
-    double fy = str.toDouble();
-    DrawType.layerResize(*current_layer_,fx/100,fy/100);
+    DrawType.layerResize(*current_layer_,ui->doubleSpinBox_length->value(),ui->doubleSpinBox_width->value());
     RefreshView();
 }
 
