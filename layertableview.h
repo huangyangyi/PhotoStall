@@ -16,16 +16,20 @@ class LayerTableView : public QTableView
     Q_OBJECT
 signals:
     void tableDataChanged();
+    void tableDeleteLayer(int index);
     void currentLayerChanged(int index);
+    void tableLayerResorted(int index1,int index2);
+    void tableLayerCreated();
 public:
     LayerTableView(vector<Layer *> *layerlist,QWidget *parent = nullptr);
     ~LayerTableView();
-    void setLayerSize(QSize s);
-
+    void RefreshTable();
 public slots:
     void addNewLayer(int);
-    void deleteLayer(int);
-
+    void deleteLayer();
+    void layerUp();
+    void layerDown();
+    void createLayer();
 protected:
     void mouseMoveEvent(QMouseEvent * event);
     void contextMenuEvent(QContextMenuEvent * event);
