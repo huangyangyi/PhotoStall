@@ -86,6 +86,9 @@ private slots:
     void Resize();
     void CallColorDialog();
     void Translation();
+    void TrunH();
+    void TrunV();
+    void Filter();
 };
 
 #endif // MAINWINDOW_H
