@@ -463,6 +463,9 @@ void MainWindow::Filter()
     }
     else if(ui->comboBox__filter->currentIndex()==1)
     {
+        ui->horizontalSlider_filter->setMinimum(0);
+        ui->horizontalSlider_filter->setMaximum(100);
+        ui->horizontalSlider_filter->setSingleStep(10);
         DrawType.layerZoomBlur(*current_layer_,ui->horizontalSlider_filter->value());
     }
     RefreshView();
