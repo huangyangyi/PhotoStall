@@ -9,13 +9,12 @@ LayerTableView::LayerTableView(vector<Layer *> *layerlist,QWidget *parent)
     this->setContentsMargins(0, 0, 0, 0);
     this->setModel(model);
     this->setItemDelegate(delegate);
-
     this->horizontalHeader()->setStretchLastSection(true);
     this->horizontalHeader()->setHighlightSections(false);
     this->setFrameShape(QFrame::NoFrame);
     this->setColumnWidth(0, 30);
     this->setColumnWidth(1, 170);
-    this->verticalHeader()->setVisible(false);
+    this->verticalHeader()->setVisible(true);
     this->horizontalHeader()->setVisible(true);
     this->resizeColumnsToContents();
     this->resizeRowsToContents();

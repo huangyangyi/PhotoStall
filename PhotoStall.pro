@@ -55,7 +55,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     icon/icon.qrc \
-    qss/qss.qrc
+    qss/qss.qrc \
+    resources.qrc
 win32 {
     INCLUDEPATH += D:\opencv\opencv\build\include
     INCLUDEPATH += D:\opencv\opcnv\build\include\opencv
@@ -83,3 +84,5 @@ unix {
     PKGCONFIG += opencv
 }
 TRANSLATIONS += PhotoStall_zh_CN.ts
+
+DISTFILES +=

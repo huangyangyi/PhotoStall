@@ -49,7 +49,9 @@ QVariant LayerTableModel::data(const QModelIndex &index,int role) const
 QVariant LayerTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole){
-        return header_name[section];
+        if (orientation==Qt::Orientation::Horizontal)
+            return header_name[section];
+        else return QString::number(section);
     }
     return QAbstractItemModel::headerData(section, orientation, role);
 }

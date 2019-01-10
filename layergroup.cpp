@@ -11,8 +11,8 @@ LayerGroup::LayerGroup(int maxHeight, int maxWidth)
     vec_layer.clear();
 
     LayerPtr bottom = new Layer, up = new Layer;
-    bottom->create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
-    up->create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    bottom->create(tr("Bottom Layer").toStdString(), OPAQUE, maxWidth, maxHeight, 1, 0, 0);
+    up->create(tr("Top Layer").toStdString(), TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
     up->clear_valued();
 
     vec_id.push_back(bottom->id);
@@ -30,8 +30,8 @@ LayerGroup::LayerGroup(string file_name, string name)
     maxHeight = mid->height;
     maxWidth = mid->width;
 
-    bottom->create("bottom layer", OPAQUE, maxWidth, maxHeight, 1, 0, 0);
-    up->create("upmost layer", TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
+    bottom->create(tr("Bottom Layer").toStdString(), OPAQUE, maxWidth, maxHeight, 1, 0, 0);
+    up->create(tr("Top Layer").toStdString(), TRANSPARENT, maxWidth, maxHeight, 1, 0, 0);
     up->clear_valued();
 
     vec_id.clear();

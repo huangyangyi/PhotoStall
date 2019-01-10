@@ -75,12 +75,12 @@ void MainWindow::ConnectAction(){
     connect(ui->pushButton_pen,SIGNAL(clicked()),this,SLOT(UsePainter()));
 }
 void MainWindow::ConnectLayer(){
-    connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)));
-    connect(layer_table_,SIGNAL(tableDataChanged()),this,SLOT(RefreshView()));
-    connect(layer_table_,SIGNAL(currentLayerChanged(int)),this,SLOT(ChangeCurrentLayer(int)));
+    connect(layer_group_,SIGNAL(inserted(int)),layer_table_,SLOT(addNewLayer(int)),Qt::UniqueConnection);
+    connect(layer_table_,SIGNAL(tableDataChanged()),this,SLOT(RefreshView()),Qt::UniqueConnection);
+    connect(layer_table_,SIGNAL(currentLayerChanged(int)),this,SLOT(ChangeCurrentLayer(int)),Qt::UniqueConnection);
     connect(layer_table_,SIGNAL(tableDeleteLayer(int)),this,SLOT(RemoveLayer(int)),Qt::UniqueConnection);
-    connect(layer_table_,SIGNAL(tableLayerResorted(int,int)),this,SLOT(ResortLayer(int,int)));
-    connect(layer_table_,SIGNAL(tableLayerCreated()),this,SLOT(CreateLayer()));
+    connect(layer_table_,SIGNAL(tableLayerResorted(int,int)),this,SLOT(ResortLayer(int,int)),Qt::UniqueConnection);
+    connect(layer_table_,SIGNAL(tableLayerCreated()),this,SLOT(CreateLayer()),Qt::UniqueConnection);
 }
 void MainWindow::DisconnectLayer(){
     disconnect(layer_group_);
@@ -129,11 +129,11 @@ void MainWindow::OpenFile()
     if (!path.isEmpty())
     {
         qDebug()<<path<<endl;
-        Layer* layer= new Layer(path.toStdString(),tr("Untitled Layer").toStdString(),OPAQUE,true,0,0);
-        layer_group_->insert(*layer);
+        Layer layer(path.toStdString(),tr("Untitled Layer").toStdString(),OPAQUE,true,0,0);
+        layer_group_->insert(layer);
         if (layer_group_->get_vec_id().size()==3) {
-            layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer->get_width()));
-            layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer->get_height()));
+            layer_group_->set_maxWidth(max(layer_group_->get_maxWidth(),layer.get_width()));
+            layer_group_->set_maxHeight(max(layer_group_->get_maxHeight(),layer.get_height()));
         }
         current_layer_ = layer_group_->get_vec_layer()[1];
     }
@@ -191,9 +191,9 @@ void MainWindow::ResortLayer(int index1,int index2){
     RefreshView();
 }
 void MainWindow::CreateLayer() {
-    Layer *new_layer = new Layer();
-    new_layer->create(tr("Untitled Layer").toStdString(),TRANSPARENT,layer_group_->get_maxWidth(),layer_group_->get_maxHeight());
-    layer_group_->insert(*new_layer);
+    Layer new_layer;
+    new_layer.create(tr("Untitled Layer").toStdString(),TRANSPARENT,layer_group_->get_maxWidth(),layer_group_->get_maxHeight());
+    layer_group_->insert(new_layer);
     layer_table_->RefreshTable();
     RefreshView();
 }

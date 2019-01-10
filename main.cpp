@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //皮肤！
     QFile qss(":/main.qss");
     //加载动画hhh
-    QPixmap pixmap("loading.png");
+    QPixmap pixmap(":/resources/resources/PhotoStall.png");
         QSplashScreen screen(pixmap);
         screen.show();
         int delayTime = 5;

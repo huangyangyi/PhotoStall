@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>LayerGroup</name>
+    <message>
+        <location filename="layergroup.cpp" line="14"/>
+        <location filename="layergroup.cpp" line="33"/>
+        <source>Bottom Layer</source>
+        <translation>底部图层</translation>
+    </message>
+    <message>
+        <location filename="layergroup.cpp" line="15"/>
+        <location filename="layergroup.cpp" line="34"/>
+        <source>Top Layer</source>
+        <translation>顶部图层</translation>
+    </message>
+</context>
+<context>
     <name>LayerTableModel</name>
     <message>
         <location filename="layertablemodel.h" line="40"/>
@@ -22,22 +37,22 @@
 <context>
     <name>LayerTableView</name>
     <message>
-        <location filename="layertableview.cpp" line="50"/>
+        <location filename="layertableview.cpp" line="49"/>
         <source>New Layer</source>
         <translation>新建图层</translation>
     </message>
     <message>
-        <location filename="layertableview.cpp" line="57"/>
+        <location filename="layertableview.cpp" line="56"/>
         <source>Delete Layer</source>
         <translation>删除图层</translation>
     </message>
     <message>
-        <location filename="layertableview.cpp" line="58"/>
+        <location filename="layertableview.cpp" line="57"/>
         <source>Move Up Layer</source>
         <translation>上移图层</translation>
     </message>
     <message>
-        <location filename="layertableview.cpp" line="59"/>
+        <location filename="layertableview.cpp" line="58"/>
         <source>Move Down Layer</source>
         <translation>下移图层</translation>
     </message>
