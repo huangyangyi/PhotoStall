@@ -82,3 +82,4 @@ unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += opencv
 }
+TRANSLATIONS += PhotoStall_zh_CN.ts
