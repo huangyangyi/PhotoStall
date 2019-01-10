@@ -192,7 +192,8 @@ void MainWindow::ResortLayer(int index1,int index2){
 }
 void MainWindow::CreateLayer() {
     Layer new_layer;
-    new_layer.create(tr("Untitled Layer").toStdString(),TRANSPARENT,layer_group_->get_maxWidth(),layer_group_->get_maxHeight());
+    new_layer.create(tr("Untitled Layer").toStdString(),OPAQUE,layer_group_->get_maxWidth(),layer_group_->get_maxHeight());
+    new_layer.clear_valued();
     layer_group_->insert(new_layer);
     layer_table_->RefreshTable();
     RefreshView();

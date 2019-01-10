@@ -11,6 +11,10 @@ void LayerBasic::layerResize(Layer &layer, double fx, double fy)
     Mat dst;
     resize(src,dst,Size(src.cols*fx,src.rows*fy));
     layer.M = dst;
+    Mat src1 = layer.valued;
+    Mat dst1;
+    resize(src1,dst1,Size(src.cols*fx,src.rows*fy));
+    layer.valued = dst1;
 }
 
 void LayerBasic::layerRotate(Layer& layer,double angle)
@@ -32,6 +36,10 @@ void LayerBasic::layerFlip(Layer& layer,int flipcode)
     Mat dst;
     flip(src,dst,flipcode);
     layer.M = dst;
+    Mat src1 = layer.valued;
+    Mat dst1;
+    flip(src1,dst1,flipcode);
+    layer.valued = dst1;
 }
 
 Mat LayerBasic::layerCalHist(Layer &layer)
