@@ -37,6 +37,7 @@ public slots:
 private:
     vector<Layer*> *layerlist;
     int selectedRow;
+    const QStringList header_name={tr("Visibility"),tr("Opacity"),tr("Layer Name")};
 };
 
 #endif // LayerTableModel_H

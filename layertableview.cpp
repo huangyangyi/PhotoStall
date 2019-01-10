@@ -16,7 +16,7 @@ LayerTableView::LayerTableView(vector<Layer *> *layerlist,QWidget *parent)
     this->setColumnWidth(0, 30);
     this->setColumnWidth(1, 170);
     this->verticalHeader()->setVisible(false);
-    this->horizontalHeader()->setVisible(false);
+    this->horizontalHeader()->setVisible(true);
     this->resizeColumnsToContents();
     this->resizeRowsToContents();
     /*this->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -47,16 +47,16 @@ void LayerTableView::contextMenuEvent(QContextMenuEvent * event)
     int row_index = event->pos().y()/rowHeight(0);
     if (row_index>=model->rowCount())
     {
-        pMenu->addAction(tr("新增图层"),this,SLOT(createLayer()));
+        pMenu->addAction(tr("New Layer"),this,SLOT(createLayer()));
         pMenu->popup(mapToGlobal(event->pos()));
     }
     else
     {
         model->setSelecttedRow(row_index);
         emit currentLayerChanged(row_index);
-        pMenu->addAction(tr("删除图层"),this,SLOT(deleteLayer()));
-        pMenu->addAction(tr("上移图层"),this,SLOT(layerUp()));
-        pMenu->addAction(tr("下移图层"),this,SLOT(layerDown()));
+        pMenu->addAction(tr("Delete Layer"),this,SLOT(deleteLayer()));
+        pMenu->addAction(tr("Move Up Layer"),this,SLOT(layerUp()));
+        pMenu->addAction(tr("Move Down Layer"),this,SLOT(layerDown()));
         pMenu->popup(mapToGlobal(event->pos()));
     }
 
