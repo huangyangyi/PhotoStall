@@ -45,6 +45,12 @@ LayerGroup::LayerGroup(string file_name, string name)
     vec_layer.push_back(up);
 }
 
+LayerGroup::~LayerGroup()
+{
+    for(vector<Layer*>::iterator it = vec_layer.begin(); it != vec_layer.end(); it++)
+        delete *it;
+}
+
 bool LayerGroup::insert(Layer layer, int id)
 {
     LayerPtr pl = new Layer(layer);

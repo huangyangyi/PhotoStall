@@ -24,6 +24,9 @@ signals:
 public:
     LayerGroup(int maxHeight = defaultSize, int maxWidth = defaultSize);
     LayerGroup(string file_name, string name = "unknown");
+
+    ~LayerGroup();
+
     // Insert function
     // default is to be inserted at the tail
     // otherwise inserted after layer with id
